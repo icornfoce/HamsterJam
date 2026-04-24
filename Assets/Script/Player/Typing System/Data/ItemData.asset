@@ -16,3 +16,13 @@ MonoBehaviour:
   - itemName: fan
     itemPrefab: {fileID: 0}
     itemSize: {x: 0, y: 0, z: 0}
+  - itemName: water
+    itemPrefab: {fileID: 0}
+    itemSize: {x: 0, y: 0, z: 0}
+  combinations:
+  - itemAName: fan
+    itemBName: water
+    resultItem:
+      itemName: rain
+      itemPrefab: {fileID: 0}
+      itemSize: {x: 0, y: 0, z: 0}
