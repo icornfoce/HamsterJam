@@ -82,6 +82,11 @@ public class PlayerController : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
+        // ป้องกันความเร็วเพิ่มขึ้นเมื่อเดินทะแยง
+        Vector2 inputDir = Vector2.ClampMagnitude(new Vector2(x, z), 1f);
+        x = inputDir.x;
+        z = inputDir.y;
+
         // คำนวณทิศทางโดยอิงจากตัวละคร (ซึ่งหันหน้าตามกล้อง)
         Vector3 move = transform.right * x + transform.forward * z;
 
@@ -94,7 +99,7 @@ public class PlayerController : MonoBehaviour
             animator.SetFloat(horizontalParam, x, animationDampTime, Time.deltaTime);
             animator.SetFloat(verticalParam, z, animationDampTime, Time.deltaTime);
             
-            float inputMagnitude = new Vector2(x, z).magnitude;
+            float inputMagnitude = inputDir.magnitude;
             animator.SetFloat(speedParam, inputMagnitude * walkSpeed, animationDampTime, Time.deltaTime);
         }
     }
