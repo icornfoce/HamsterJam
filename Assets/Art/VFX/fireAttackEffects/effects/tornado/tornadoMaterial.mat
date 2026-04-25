@@ -54,6 +54,7 @@ Material:
     - _Dissolve: 0.15
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _alphaStrength: 0.13
     - _color_strength: -0.26
     - _noisePower: 1
     - _noise_scale: 0.4
