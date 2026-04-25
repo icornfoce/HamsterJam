@@ -8,6 +8,9 @@ public class ItemInfo
     public GameObject itemPrefab;
     public Vector3 itemSize;
     public bool isUnlocked = false; // เก็บสถานะว่าผู้เล่นเคยแตะเพื่อปลดล็อคแล้วหรือยัง
+
+    [Header("Skill")]
+    public GameObject itemSkill; // Prefab ของ Skill ที่จะถูกเรียกใช้เมื่อปล่อยไอเทมนี้
 }
 
 [System.Serializable]

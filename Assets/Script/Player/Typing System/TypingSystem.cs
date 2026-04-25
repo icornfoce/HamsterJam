@@ -331,20 +331,25 @@ public class TypingSystem : MonoBehaviour
     {
         if (item == null || obj == null) return;
 
-        // คืนค่าความชัด (Alpha = 1) ก่อนปล่อย
-        ApplyTransparency(obj, 1.0f);
-
-        // ปล่อยไอเทมออกจากตัว
-        obj.transform.SetParent(null);
-        
-        // วางไว้ข้างหน้าผู้เล่น
-        Vector3 spawnPos = playerTransform.position + playerTransform.forward * 2f;
-        obj.transform.position = spawnPos;
+        // ── เรียกใช้ Skill ของไอเทมนี้ (ถ้ามี) ──
+        if (item.itemSkill != null)
+        {
+            GameObject skillObj = Instantiate(item.itemSkill, playerTransform.position, playerTransform.rotation);
+            
+            BaseItemSkill skill = skillObj.GetComponent<BaseItemSkill>();
+            if (skill != null)
+            {
+                skill.Activate(playerTransform);
+            }
+        }
         
         PlaySFX(releaseSFX);
-        SpawnVFX(releaseVFXPrefab, spawnPos);
+        SpawnVFX(releaseVFXPrefab, playerTransform.position);
 
         Debug.Log($"Released: {item.itemName}");
+
+        // ทำลายไอเทมที่ลอยอยู่ (ไม่ต้องวางลงพื้น)
+        Destroy(obj);
         
         // ล้างสถานะ
         item = null;

@@ -17,18 +17,22 @@ MonoBehaviour:
     itemPrefab: {fileID: 7768556915814323043, guid: 00e6722510b86ce4198408bbcea3e685, type: 3}
     itemSize: {x: 1, y: 1, z: 1}
     isUnlocked: 0
+    itemSkill: {fileID: 0}
   - itemName: water
     itemPrefab: {fileID: 6841551885571939741, guid: f7c312b92521ace4289f9c8facebbbb8, type: 3}
     itemSize: {x: 1, y: 1, z: 1}
     isUnlocked: 1
+    itemSkill: {fileID: 6377765606879312844, guid: f7779fa3b8993934c893c008d1720b7e, type: 3}
   - itemName: ice cream
     itemPrefab: {fileID: 8361210970595336669, guid: 52ebe8258bbad2545b3558a5575338c6, type: 3}
     itemSize: {x: 1, y: 1, z: 1}
     isUnlocked: 0
+    itemSkill: {fileID: 2525315933284846863, guid: c43ee4dca2c7faa4abda73073510f765, type: 3}
   - itemName: dry ice
     itemPrefab: {fileID: 7022710859829219038, guid: c118835eccad39a4495f468b23c5af86, type: 3}
     itemSize: {x: 1, y: 1, z: 1}
     isUnlocked: 0
+    itemSkill: {fileID: 0}
   combinations:
   - itemAName: fan
     itemBName: water
@@ -37,3 +41,4 @@ MonoBehaviour:
       itemPrefab: {fileID: 0}
       itemSize: {x: 1, y: 1, z: 1}
       isUnlocked: 0
+      itemSkill: {fileID: 0}

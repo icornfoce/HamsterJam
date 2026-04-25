@@ -7,6 +7,10 @@ public class Enemy : MonoBehaviour
     [Header("การเคลื่อนที่")]
     public float speed = 3f;
     
+    [Header("Stats (พลังชีวิต)")]
+    public int maxHealth = 100;
+    private int currentHealth;
+
     [Header("การโจมตี (การสัมผัส)")]
     public int attackDamage = 10;
     public float attackCooldown = 1f;
@@ -22,6 +26,8 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        currentHealth = maxHealth;
+        
         agent = GetComponent<NavMeshAgent>();
         agent.speed = speed;
 
@@ -111,5 +117,25 @@ public class Enemy : MonoBehaviour
 
             nextAttackTime = Time.time + attackCooldown;
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        currentHealth = Mathf.Max(currentHealth, 0);
+        
+        Debug.Log($"<color=red>[Enemy] โดนโจมตี {damage}! เลือดเหลือ {currentHealth}/{maxHealth}</color>");
+        
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("[Enemy] ตาย!");
+        // TODO: ใส่ Animation หรือ Effect การตายตรงนี้
+        Destroy(gameObject);
     }
 }

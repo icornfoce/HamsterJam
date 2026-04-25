@@ -8,6 +8,10 @@ public class Rangeenemy : MonoBehaviour
     [Header("การเคลื่อนที่")]
     public float moveSpeed       = 3f;
 
+    [Header("Stats (พลังชีวิต)")]
+    public int maxHealth = 100;
+    private int currentHealth;
+
     [Header("ระยะโจมตี")]
     public float attackRange     = 10f;   // ระยะที่จะยิงได้
     public float preferredRange  = 7f;    // ระยะที่ต้องการรักษาไว้ (ห่างจาก Player)
@@ -38,6 +42,8 @@ public class Rangeenemy : MonoBehaviour
     // ──────────────────────────────────────────
     private void Start()
     {
+        currentHealth = maxHealth;
+
         agent       = GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
 
@@ -179,5 +185,25 @@ public class Rangeenemy : MonoBehaviour
         // ระยะ Too Close (สีฟ้า)
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, tooCloseRange);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        currentHealth = Mathf.Max(currentHealth, 0);
+        
+        Debug.Log($"<color=red>[RangeEnemy] โดนโจมตี {damage}! เลือดเหลือ {currentHealth}/{maxHealth}</color>");
+        
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("[RangeEnemy] ตาย!");
+        // TODO: ใส่ Animation หรือ Effect การตายตรงนี้
+        Destroy(gameObject);
     }
 }
