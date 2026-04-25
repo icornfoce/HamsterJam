@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public string horizontalParam = "Horizontal"; // แกน X สำหรับ Blend Tree
     public string verticalParam = "Vertical";     // แกน Y สำหรับ Blend Tree
-    public string speedParam = "Speed";           // ค่าความเร็วรวม
     public string hitTrigger = "Hit";             // ชื่อ Trigger ตอนโดนตี
     
     [Tooltip("ความเร็วในการเปลี่ยนท่าทาง (Animation Smoothing)")]
@@ -96,11 +95,9 @@ public class PlayerController : MonoBehaviour
         // --- อัปเดต Animation สำหรับ 2D Blend Tree ---
         if (animator != null)
         {
+            // ใช้แค่ Horizontal และ Vertical ก็เพียงพอสำหรับ 2D Blend Tree แล้วครับ
             animator.SetFloat(horizontalParam, x, animationDampTime, Time.deltaTime);
             animator.SetFloat(verticalParam, z, animationDampTime, Time.deltaTime);
-            
-            float inputMagnitude = inputDir.magnitude;
-            animator.SetFloat(speedParam, inputMagnitude * walkSpeed, animationDampTime, Time.deltaTime);
         }
     }
 }

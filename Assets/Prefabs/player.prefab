@@ -130,10 +130,9 @@ MonoBehaviour:
   matchVFXPrefab: {fileID: 0}
   combineVFXPrefab: {fileID: 0}
   releaseVFXPrefab: {fileID: 0}
-  vfxSpawnPoint: {fileID: 0}
   playerTransform: {fileID: 8148156640763040352}
   firstSlotOffset: {x: 1.5, y: 0.5, z: 1}
-  secondSlotOffset: {x: 2.5, y: 0.5, z: 1}
+  secondSlotOffset: {x: -1.5, y: 0.5, z: 1}
   bobSpeed: 2
   bobAmount: 0.1
   followSpeed: 5
@@ -1467,7 +1466,6 @@ MonoBehaviour:
   animator: {fileID: 5540698003797573277}
   horizontalParam: Horizontal
   verticalParam: Vertical
-  speedParam: Speed
   hitTrigger: Hit
   animationDampTime: 0.1
   maxHealth: 100
@@ -3935,7 +3933,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineDeoccluder
   CollideAgainst:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 4294967295
   IgnoreTag: Player
   TransparentLayers:
     serializedVersion: 2

@@ -2115,7 +2115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
   itemData: {fileID: 11400000, guid: 354e0ae02c82d2f4d84c1090535658ce, type: 2}
-  targetItemName: dry ice
+  targetItemName: ice
   uiCanvas: {fileID: 0}
   statusText: {fileID: 0}
 --- !u!65 &3853313478532811927

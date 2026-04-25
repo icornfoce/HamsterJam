@@ -27,7 +27,6 @@ public class TypingSystem : MonoBehaviour
     [SerializeField] private GameObject matchVFXPrefab;
     [SerializeField] private GameObject combineVFXPrefab;
     [SerializeField] private GameObject releaseVFXPrefab;
-    [SerializeField] private Transform vfxSpawnPoint; // Where to spawn player-centered VFX
 
     [Header("Item Spawning Settings")]
     [SerializeField] private Transform playerTransform; // ลาก Player มาใส่ตรงนี้ (ถ้าไม่ใส่จะหา Tag "Player" อัตโนมัติ)
@@ -66,6 +65,8 @@ public class TypingSystem : MonoBehaviour
         }
     }
 
+
+
     void Update()
     {
         if (Input.GetMouseButtonDown(1))
@@ -81,6 +82,17 @@ public class TypingSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && isSlowed)
         {
             SetSlowMotion(false);
+        }
+
+        // ตรวจสอบการกด Enter เพื่อส่งคำศัพท์ (ส่งเฉพาะตอนที่เปิดหน้าต่างพิมพ์อยู่)
+        if (isSlowed && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)))
+        {
+            if (inputField != null && !string.IsNullOrEmpty(inputField.text))
+            {
+                TryMatchItem(inputField.text);
+                inputField.text = "";
+                inputField.ActivateInputField();
+            }
         }
 
         // ทำให้ไอเทมที่ลอยอยู่มีการขยับขึ้นลง (Bobbing Effect)
@@ -149,32 +161,49 @@ public class TypingSystem : MonoBehaviour
                 else
                 {
                     Debug.Log($"Item {item.itemName} is found but not unlocked yet!");
-                    break; // ไม่ return true เพื่อให้เล่นเสียง Error
+                    break; // ออกจาก Loop เพื่อไปปิดหน้าต่างและเล่นเสียง Error
                 }
             }
         }
 
+        // ถ้าพิมพ์ผิด หรือหาไม่เจอ ให้ปิดหน้าต่างพิมพ์เหมือนกัน
+        SetSlowMotion(false);
         PlaySFX(errorSFX);
         return false;
     }
 
     private void ProcessItemMatch(ItemInfo matchedItem)
     {
+        // ถ้าช่องแรกว่าง ให้ใส่ช่องแรก
         if (firstItem == null || string.IsNullOrEmpty(firstItem.itemName))
         {
             firstItem = matchedItem;
             spawnedFirst = SpawnItemAtOffset(firstItem, firstSlotOffset);
             
             PlaySFX(matchSFX);
-            SpawnVFX(matchVFXPrefab, vfxSpawnPoint != null ? vfxSpawnPoint.position : transform.position);
+            SpawnVFX(matchVFXPrefab, spawnedFirst.transform.position);
             Debug.Log($"<color=cyan>First Item: {firstItem.itemName}</color>");
         }
-        else
+        // ถ้าช่องสองว่าง ให้ใส่ช่องสอง
+        else if (secondItem == null || string.IsNullOrEmpty(secondItem.itemName))
         {
             secondItem = matchedItem;
             spawnedSecond = SpawnItemAtOffset(secondItem, secondSlotOffset);
             
+            PlaySFX(matchSFX);
+            SpawnVFX(matchVFXPrefab, spawnedSecond.transform.position);
             Debug.Log($"<color=cyan>Second Item: {secondItem.itemName}</color>");
+            CheckCombination();
+        }
+        // ถ้าเต็มทั้งสองช่อง ให้เปลี่ยนอันที่สองเป็นอันใหม่
+        else
+        {
+            if (spawnedSecond != null) Destroy(spawnedSecond);
+            secondItem = matchedItem;
+            spawnedSecond = SpawnItemAtOffset(secondItem, secondSlotOffset);
+            
+            PlaySFX(matchSFX);
+            SpawnVFX(matchVFXPrefab, spawnedSecond.transform.position);
             CheckCombination();
         }
     }
@@ -269,66 +298,57 @@ public class TypingSystem : MonoBehaviour
                 // ตั้งค่าไอเทมใหม่
                 firstItem = combo.resultItem;
                 secondItem = null;
+                spawnedSecond = null;
                 
                 // สร้างไอเทมผลลัพธ์
                 spawnedFirst = SpawnItemAtOffset(firstItem, firstSlotOffset);
-                spawnedSecond = null;
                 
                 PlaySFX(combineSFX);
-                SpawnVFX(combineVFXPrefab, vfxSpawnPoint != null ? vfxSpawnPoint.position : transform.position);
+                SpawnVFX(combineVFXPrefab, spawnedFirst.transform.position);
                 return;
             }
         }
         
-        Debug.Log("No combination found. Replacing first item with latest.");
-        
-        // ถ้าผสมไม่ได้ ให้เอาอันที่สองมาแทนอันแรก
-        if (spawnedFirst != null) Destroy(spawnedFirst);
-        
-        firstItem = secondItem;
-        spawnedFirst = spawnedSecond;
-        
-        // เลื่อนตำแหน่ง spawnedFirst มาอยู่ที่ Slot 1 (Update จะจัดการเรื่อง bobbing ให้เอง)
-        if (spawnedFirst != null)
-        {
-            spawnedFirst.transform.localPosition = new Vector3(
-                firstSlotOffset.x,
-                firstSlotOffset.y,
-                firstSlotOffset.z - (firstItem.itemSize.z * 0.5f)
-            );
-        }
-
-        secondItem = null;
-        spawnedSecond = null;
-        
-        PlaySFX(matchSFX); // Play match sound if just replaced
+        Debug.Log("No combination found. Keeping both items in their slots.");
+        // ไม่ต้องทำอะไร ปล่อยให้มันลอยอยู่คนละฝั่งตามปกติ
     }
 
     private void ReleaseItem()
     {
-        if (firstItem != null && spawnedFirst != null)
+        // ปล่อยชิ้นที่สองก่อน (ถ้ามี)
+        if (secondItem != null && spawnedSecond != null)
         {
-            // คืนค่าความชัด (Alpha = 1) ก่อนปล่อย
-            ApplyTransparency(spawnedFirst, 1.0f);
-
-            // ปล่อยไอเทมออกจากตัว
-            spawnedFirst.transform.SetParent(null);
-            
-            // วางไว้ข้างหน้าผู้เล่น
-            Vector3 spawnPos = playerTransform.position + playerTransform.forward * 2f;
-            spawnedFirst.transform.position = spawnPos;
-            
-            PlaySFX(releaseSFX);
-            SpawnVFX(releaseVFXPrefab, spawnPos);
-
-            Debug.Log($"Released: {firstItem.itemName}");
-            
-            // ล้างสถานะแต่ไม่ทำลาย Object เพราะเราปล่อยมันลงพื้นแล้ว
-            firstItem = null;
-            spawnedFirst = null;
-            secondItem = null;
-            spawnedSecond = null;
+            PerformRelease(ref secondItem, ref spawnedSecond);
         }
+        // ถ้าไม่มีชิ้นที่สอง ให้ปล่อยชิ้นแรก
+        else if (firstItem != null && spawnedFirst != null)
+        {
+            PerformRelease(ref firstItem, ref spawnedFirst);
+        }
+    }
+
+    private void PerformRelease(ref ItemInfo item, ref GameObject obj)
+    {
+        if (item == null || obj == null) return;
+
+        // คืนค่าความชัด (Alpha = 1) ก่อนปล่อย
+        ApplyTransparency(obj, 1.0f);
+
+        // ปล่อยไอเทมออกจากตัว
+        obj.transform.SetParent(null);
+        
+        // วางไว้ข้างหน้าผู้เล่น
+        Vector3 spawnPos = playerTransform.position + playerTransform.forward * 2f;
+        obj.transform.position = spawnPos;
+        
+        PlaySFX(releaseSFX);
+        SpawnVFX(releaseVFXPrefab, spawnPos);
+
+        Debug.Log($"Released: {item.itemName}");
+        
+        // ล้างสถานะ
+        item = null;
+        obj = null;
     }
 
     public void OpenTyping()
@@ -375,7 +395,7 @@ public class TypingSystem : MonoBehaviour
         }
     }
 
-    public void MatchItem(string input) => TryMatchItem(input);
+
 
     public void ClearMatch()
     {
