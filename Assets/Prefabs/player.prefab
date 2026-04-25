@@ -63,6 +63,81 @@ Transform:
   - {fileID: 8090045838677842668}
   m_Father: {fileID: 7955831574922359960}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &110635767059031794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8571395056930692890}
+  - component: {fileID: 6111752120240788594}
+  m_Layer: 0
+  m_Name: TypingSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8571395056930692890
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110635767059031794}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.7707496, y: 0, z: 5.597976}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8148156640763040352}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6111752120240788594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110635767059031794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8f76dfe927434a4ca3d0dac5b739c3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TypingSystem
+  itemData: {fileID: 11400000, guid: 354e0ae02c82d2f4d84c1090535658ce, type: 2}
+  typingUI: {fileID: 0}
+  inputField: {fileID: 0}
+  firstItem:
+    itemName: 
+    itemPrefab: {fileID: 0}
+    itemSize: {x: 0, y: 0, z: 0}
+    isUnlocked: 0
+  secondItem:
+    itemName: 
+    itemPrefab: {fileID: 0}
+    itemSize: {x: 0, y: 0, z: 0}
+    isUnlocked: 0
+  slowTimeScale: 0.2
+  audioSource: {fileID: 0}
+  openSFX: {fileID: 0}
+  matchSFX: {fileID: 0}
+  combineSFX: {fileID: 0}
+  releaseSFX: {fileID: 0}
+  errorSFX: {fileID: 0}
+  matchVFXPrefab: {fileID: 0}
+  combineVFXPrefab: {fileID: 0}
+  releaseVFXPrefab: {fileID: 0}
+  vfxSpawnPoint: {fileID: 0}
+  playerTransform: {fileID: 0}
+  firstSlotOffset: {x: 1.5, y: 0.5, z: 1}
+  secondSlotOffset: {x: 2.5, y: 0.5, z: 1}
+  bobSpeed: 2
+  bobAmount: 0.1
+  followSpeed: 5
+  itemAlpha: 0.8
 --- !u!1 &159338724559497507
 GameObject:
   m_ObjectHideFlags: 0
@@ -1324,6 +1399,7 @@ Transform:
   - {fileID: 4886332243570498512}
   - {fileID: 8668023508643714677}
   - {fileID: 7644518332841464748}
+  - {fileID: 8571395056930692890}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5540698003797573277
