@@ -5,7 +5,6 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float walkSpeed = 5f;
-    public float gravity = -19.62f; // Stronger gravity feels better for games
 
     [Header("Cinemachine Settings")]
     [Tooltip("ลาก Main Camera จากหน้าต่าง Hierarchy มาใส่ตรงนี้ (หรือปล่อยว่างไว้ระบบจะหาเอง)")]
@@ -14,16 +13,24 @@ public class PlayerController : MonoBehaviour
     [Header("Animation Settings")]
     [Tooltip("ลากตัวละครที่มี Animator มาใส่ช่องนี้")]
     public Animator animator;
-    public string speedParam = "Speed";      // ตั้งค่าเป็น Float ใน Animator
-    public string groundedBool = "IsGrounded"; // ตั้งค่าเป็น Bool ใน Animator
+    public string horizontalParam = "Horizontal"; // แกน X สำหรับ Blend Tree
+    public string verticalParam = "Vertical";     // แกน Y สำหรับ Blend Tree
+    public string speedParam = "Speed";           // ค่าความเร็วรวม
+    public string hitTrigger = "Hit";             // ชื่อ Trigger ตอนโดนตี
+    
+    [Tooltip("ความเร็วในการเปลี่ยนท่าทาง (Animation Smoothing)")]
+    public float animationDampTime = 0.1f;
+
+    [Header("Stats")]
+    public int maxHealth = 100;
+    public int currentHealth;
 
     private CharacterController controller;
-    private Vector3 velocity;
-    private bool isGrounded;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        currentHealth = maxHealth;
         
         // Lock the cursor to the center of the screen
         Cursor.lockState = CursorLockMode.Locked;
@@ -47,36 +54,48 @@ public class PlayerController : MonoBehaviour
         HandleMovement();
     }
 
-    private void HandleMovement()
+    public void TakeDamage(int damage)
     {
-        // Ground check
-        isGrounded = controller.isGrounded;
-        if (isGrounded && velocity.y < 0)
+        currentHealth -= damage;
+        Debug.Log($"Player took {damage} damage. Current Health: {currentHealth}");
+
+        if (animator != null)
         {
-            velocity.y = -2f; // Small downward force to keep player grounded
+            animator.SetTrigger(hitTrigger);
         }
 
-        // Use standard Legacy Input for movement (WASD or Arrow keys)
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("Player is dead!");
+        // เพิ่มเติม: เล่นท่าตาย หรือ Restart เกม
+    }
+
+    private void HandleMovement()
+    {
+        // รับค่า Input
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
+        // คำนวณทิศทางโดยอิงจากตัวละคร (ซึ่งหันหน้าตามกล้อง)
         Vector3 move = transform.right * x + transform.forward * z;
 
-        // บังคับใช้ความเร็วเดิน (walkSpeed) ตลอดเวลา
+        // เคลื่อนที่ (ตัดแกน Y ออกเพราะไม่ต้องใช้แรงโน้มถ่วง/กระโดด)
         controller.Move(move * walkSpeed * Time.deltaTime);
 
-        // --- อัปเดต Animation ---
+        // --- อัปเดต Animation สำหรับ 2D Blend Tree ---
         if (animator != null)
         {
-            // คำนวณความแรงของการกดปุ่มเดิน (ไม่เกิน 1)
-            float inputMagnitude = Mathf.Clamp01(new Vector2(x, z).magnitude);
-            // ส่งค่าความเร็วให้ Animator
-            animator.SetFloat(speedParam, inputMagnitude * walkSpeed);
-            animator.SetBool(groundedBool, isGrounded);
+            animator.SetFloat(horizontalParam, x, animationDampTime, Time.deltaTime);
+            animator.SetFloat(verticalParam, z, animationDampTime, Time.deltaTime);
+            
+            float inputMagnitude = new Vector2(x, z).magnitude;
+            animator.SetFloat(speedParam, inputMagnitude * walkSpeed, animationDampTime, Time.deltaTime);
         }
-
-        // Apply gravity
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
     }
 }
