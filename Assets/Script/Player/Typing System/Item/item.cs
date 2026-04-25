@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class Item : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Item : MonoBehaviour
     [Header("อ้างอิง UI")]
     [Tooltip("ลาก Canvas หรือ Panel ของไอเทมชิ้นนี้มาใส่ได้เลย")]
     public GameObject uiCanvas; // หน้าต่าง Canvas ที่จะให้เด้งขึ้นมาบอกว่าได้รับไอเทม
+    public TextMeshProUGUI statusText; // ตัวหนังสือที่จะบอกว่าได้รับไอเทมอะไร
 
     private void Start()
     {
@@ -34,6 +36,14 @@ public class Item : MonoBehaviour
                     if (item.itemName == targetItemName)
                     {
                         item.isUnlocked = true; // ปลดล็อคให้เป็น true เลยตลอด
+                        
+                        // แสดงข้อความ You get [name]
+                        if (statusText != null)
+                        {
+                            statusText.text = "You get\n[ " + item.itemName + " ]";
+                        }
+                        
+                        Debug.Log("You get\n[ " + item.itemName + " ]");
                         break; // เจอแล้วหยุดค้นหา
                     }
                 }

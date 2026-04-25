@@ -14,15 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   items:
   - itemName: fan
-    itemPrefab: {fileID: 0}
-    itemSize: {x: 0, y: 0, z: 0}
+    itemPrefab: {fileID: 7768556915814323043, guid: 00e6722510b86ce4198408bbcea3e685, type: 3}
+    itemSize: {x: 1, y: 1, z: 1}
+    isUnlocked: 0
   - itemName: water
-    itemPrefab: {fileID: 0}
-    itemSize: {x: 0, y: 0, z: 0}
+    itemPrefab: {fileID: 6841551885571939741, guid: f7c312b92521ace4289f9c8facebbbb8, type: 3}
+    itemSize: {x: 1, y: 1, z: 1}
+    isUnlocked: 1
+  - itemName: ice cream
+    itemPrefab: {fileID: 8361210970595336669, guid: 52ebe8258bbad2545b3558a5575338c6, type: 3}
+    itemSize: {x: 1, y: 1, z: 1}
+    isUnlocked: 0
+  - itemName: dry ice
+    itemPrefab: {fileID: 7022710859829219038, guid: c118835eccad39a4495f468b23c5af86, type: 3}
+    itemSize: {x: 1, y: 1, z: 1}
+    isUnlocked: 0
   combinations:
   - itemAName: fan
     itemBName: water
     resultItem:
       itemName: rain
       itemPrefab: {fileID: 0}
-      itemSize: {x: 0, y: 0, z: 0}
+      itemSize: {x: 1, y: 1, z: 1}
+      isUnlocked: 0
