@@ -34,6 +34,19 @@ public class TypingSystem : MonoBehaviour
     public GameObject ItemPrefab => firstItem?.itemPrefab;
     public Vector3 ItemSize => firstItem?.itemSize ?? Vector3.zero;
 
+    private void Awake()
+    {
+        // รีเซ็ตสถานะการปลดล็อคทั้งหมดเมื่อเริ่มเกมใหม่
+        // (เพราะ ItemData เป็น ScriptableObject ค่ามันจะค้างอยู่จากการกด Play ครั้งก่อนใน Editor)
+        if (itemData != null)
+        {
+            foreach (var item in itemData.items)
+            {
+                item.isUnlocked = false;
+            }
+        }
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(1))
