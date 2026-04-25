@@ -9,10 +9,9 @@ public class PlayerController : MonoBehaviour
     public float jumpHeight = 2f;
     public float gravity = -19.62f; // Stronger gravity feels better for games
 
-    [Header("Look Settings")]
-    public float mouseSensitivity = 300f; // Increased default sensitivity for standard input
-    public Transform playerCamera;
-    private float xRotation = 0f;
+    [Header("Cinemachine Settings")]
+    [Tooltip("ลาก Main Camera จากหน้าต่าง Hierarchy มาใส่ตรงนี้ (หรือปล่อยว่างไว้ระบบจะหาเอง)")]
+    public Transform mainCamera; 
 
     private CharacterController controller;
     private Vector3 velocity;
@@ -25,29 +24,23 @@ public class PlayerController : MonoBehaviour
         // Lock the cursor to the center of the screen
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        // ถ้าไม่ได้ลากใส่ ให้พยายามหา MainCamera อัตโนมัติ
+        if (mainCamera == null && Camera.main != null)
+        {
+            mainCamera = Camera.main.transform;
+        }
     }
 
     void Update()
     {
-        HandleLook();
+        // บังคับให้ตัวละครหันหน้า (แกน Y) ไปทางเดียวกับที่กล้องมองเสมอ
+        if (mainCamera != null)
+        {
+            transform.rotation = Quaternion.Euler(0f, mainCamera.eulerAngles.y, 0f);
+        }
+
         HandleMovement();
-    }
-
-    private void HandleLook()
-    {
-        if (playerCamera == null) return;
-
-        // Use standard Legacy Input for mouse looking
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-
-        // Vertical rotation (Looking up/down)
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-        playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-
-        // Horizontal rotation (Looking left/right)
-        transform.Rotate(Vector3.up * mouseX);
     }
 
     private void HandleMovement()
