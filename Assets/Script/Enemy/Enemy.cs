@@ -100,11 +100,11 @@ public class Enemy : MonoBehaviour
             }
 
             // --- ชั่วคราว: ปิดระบบลดเลือดไปก่อนตามที่ต้องการ ---
-            // PlayerHealth pHealth = targetPlayer.GetComponent<PlayerHealth>();
-            // if (pHealth != null)
-            // {
-            //     pHealth.TakeDamage(attackDamage);
-            // }
+            PlayerHealth pHealth = targetPlayer.GetComponent<PlayerHealth>();
+            if (pHealth != null)
+            {
+                pHealth.TakeDamage(attackDamage);
+            }
 
             // ให้พิมพ์แค่ Debug ลง Console ตอนนี้
             Debug.Log($"Enemy แตะโดนตัว Player! >>> เลือด Player ลดลงไป: {attackDamage}");
