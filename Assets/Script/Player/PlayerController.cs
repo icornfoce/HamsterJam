@@ -5,13 +5,17 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float walkSpeed = 5f;
-    public float sprintSpeed = 8f;
-    public float jumpHeight = 2f;
     public float gravity = -19.62f; // Stronger gravity feels better for games
 
     [Header("Cinemachine Settings")]
     [Tooltip("ลาก Main Camera จากหน้าต่าง Hierarchy มาใส่ตรงนี้ (หรือปล่อยว่างไว้ระบบจะหาเอง)")]
     public Transform mainCamera; 
+
+    [Header("Animation Settings")]
+    [Tooltip("ลากตัวละครที่มี Animator มาใส่ช่องนี้")]
+    public Animator animator;
+    public string speedParam = "Speed";      // ตั้งค่าเป็น Float ใน Animator
+    public string groundedBool = "IsGrounded"; // ตั้งค่าเป็น Bool ใน Animator
 
     private CharacterController controller;
     private Vector3 velocity;
@@ -58,14 +62,17 @@ public class PlayerController : MonoBehaviour
 
         Vector3 move = transform.right * x + transform.forward * z;
 
-        // Apply movement speed (Left Shift to sprint)
-        float currentSpeed = Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed;
-        controller.Move(move * currentSpeed * Time.deltaTime);
+        // บังคับใช้ความเร็วเดิน (walkSpeed) ตลอดเวลา
+        controller.Move(move * walkSpeed * Time.deltaTime);
 
-        // Jumping (Spacebar or default "Jump" input)
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        // --- อัปเดต Animation ---
+        if (animator != null)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            // คำนวณความแรงของการกดปุ่มเดิน (ไม่เกิน 1)
+            float inputMagnitude = Mathf.Clamp01(new Vector2(x, z).magnitude);
+            // ส่งค่าความเร็วให้ Animator
+            animator.SetFloat(speedParam, inputMagnitude * walkSpeed);
+            animator.SetBool(groundedBool, isGrounded);
         }
 
         // Apply gravity
