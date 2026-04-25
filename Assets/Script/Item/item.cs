@@ -2,9 +2,13 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    [Header("ข้อมูลไอเทม (อิงจากโฟลเดอร์ Data)")]
+    public ItemData itemData; // ลากไฟล์ ItemData จากโฟลเดอร์ Data มาใส่ตรงนี้
+    public string targetItemName; // ชื่อไอเทมชิ้นนี้ที่จะปลดล็อคใน Data (ต้องพิมพ์ให้ตรงกับใน Data)
+
     [Header("อ้างอิง UI")]
-    [Tooltip("ลาก Canvas หรือ Panel ของไอเทมชิ้นนี้มาใส่ได้เลย (คุณสามารถไปพิมพ์ข้อความตกแต่งเตรียมไว้ใน UI ได้เลย)")]
-    public GameObject uiCanvas; // หน้าต่าง Canvas ที่จะให้เด้งขึ้นมา
+    [Tooltip("ลาก Canvas หรือ Panel ของไอเทมชิ้นนี้มาใส่ได้เลย")]
+    public GameObject uiCanvas; // หน้าต่าง Canvas ที่จะให้เด้งขึ้นมาบอกว่าได้รับไอเทม
 
     private void Start()
     {
@@ -15,15 +19,29 @@ public class Item : MonoBehaviour
         }
     }
 
-    // ทำงานเมื่อมีบางอย่างเข้ามาชน (ตัว Item ต้องติ๊ก Is Trigger ใน Collider ด้วย)
+    // ทำงานเมื่อมีบางอย่างเข้ามาชน
     private void OnTriggerEnter(Collider other)
     {
         // เช็คว่าคนที่มาชนมี Tag เป็น "Player" หรือไม่
         if (other.CompareTag("Player"))
         {
+            // ทำการปลดล็อคใน ItemData
+            if (itemData != null && !string.IsNullOrEmpty(targetItemName))
+            {
+                foreach (var item in itemData.items)
+                {
+                    // ค้นหาไอเทมใน Data ที่ชื่อตรงกัน
+                    if (item.itemName == targetItemName)
+                    {
+                        item.isUnlocked = true; // ปลดล็อคให้เป็น true เลยตลอด
+                        break; // เจอแล้วหยุดค้นหา
+                    }
+                }
+            }
+
             if (uiCanvas != null)
             {
-                // แสดง UI ที่คุณทำเตรียมไว้ขึ้นมา
+                // แสดง UI ขึ้นมา (เช่น คำอธิบายว่าได้ไอเทมนี้แล้ว)
                 uiCanvas.SetActive(true);
             }
         }
@@ -36,7 +54,7 @@ public class Item : MonoBehaviour
         {
             if (uiCanvas != null)
             {
-                // ปิด UI เมื่อผู้เล่นเดินออก
+                // ปิด UI เมื่อผู้เล่นเดินออก (แต่ใน Data จะยังเป็น isUnlocked = true อยู่)
                 uiCanvas.SetActive(false);
             }
         }

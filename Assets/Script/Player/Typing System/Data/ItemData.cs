@@ -7,6 +7,7 @@ public class ItemInfo
     public string itemName;
     public GameObject itemPrefab;
     public Vector3 itemSize;
+    public bool isUnlocked = false; // เก็บสถานะว่าผู้เล่นเคยแตะเพื่อปลดล็อคแล้วหรือยัง
 }
 
 [System.Serializable]

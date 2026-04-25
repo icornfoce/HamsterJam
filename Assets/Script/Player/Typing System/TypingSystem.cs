@@ -60,9 +60,17 @@ public class TypingSystem : MonoBehaviour
         {
             if (string.Equals(item.itemName, input, System.StringComparison.OrdinalIgnoreCase))
             {
-                ProcessItemMatch(item);
-                SetSlowMotion(false);
-                return true;
+                if (item.isUnlocked) // เช็คว่าปลดล็อค (แตะในด่าน) แล้วหรือยัง
+                {
+                    ProcessItemMatch(item);
+                    SetSlowMotion(false);
+                    return true;
+                }
+                else
+                {
+                    Debug.Log($"Item {item.itemName} is found but not unlocked yet!");
+                    break; // ไม่ return true เพื่อให้เล่นเสียง Error
+                }
             }
         }
 
