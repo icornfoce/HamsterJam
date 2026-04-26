@@ -4923,6 +4923,7 @@ GameObject:
   - component: {fileID: 2254630328353930447}
   - component: {fileID: 828546252109227539}
   - component: {fileID: 7170897623265136670}
+  - component: {fileID: 2861050283258922524}
   m_Layer: 0
   m_Name: water skill(new)
   m_TagString: Untagged
@@ -4940,7 +4941,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.5142251, y: 3.8, z: -6.16033}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3984891323787080412}
@@ -9825,3 +9826,23 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &2861050283258922524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5974756151701262875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b67915dce6217b4a9a3bb2b37b1d75e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaterSkill
+  voiceClip: {fileID: 0}
+  voiceVolume: 1
+  speed: 15
+  damage: 20
+  lifetime: 5
+  hitVFXPrefab: {fileID: 0}
+  shootSFX: {fileID: 0}
+  hitSFX: {fileID: 0}

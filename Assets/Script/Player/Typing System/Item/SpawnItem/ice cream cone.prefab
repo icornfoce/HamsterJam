@@ -134,7 +134,7 @@ MonoBehaviour:
   voiceClip: {fileID: 0}
   voiceVolume: 1
   speed: 15
-  damage: 20
+  damage: 20000
   lifetime: 5
   hitVFXPrefab: {fileID: 0}
   shootSFX: {fileID: 0}

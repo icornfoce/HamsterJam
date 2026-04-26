@@ -110,6 +110,9 @@ MonoBehaviour:
   itemData: {fileID: 11400000, guid: 354e0ae02c82d2f4d84c1090535658ce, type: 2}
   typingUI: {fileID: 0}
   inputField: {fileID: 0}
+  typingVignette: {fileID: 0}
+  overlayFadeSpeed: 10
+  maxOverlayAlpha: 0.8
   firstItem:
     itemName: 
     itemPrefab: {fileID: 0}
@@ -117,6 +120,7 @@ MonoBehaviour:
     isUnlocked: 0
     itemSkill: {fileID: 0}
     skillSpawnOffset: {x: 0, y: 1, z: 1}
+    skillSpawnEulerAngles: {x: 0, y: 0, z: 0}
   secondItem:
     itemName: 
     itemPrefab: {fileID: 0}
@@ -124,6 +128,7 @@ MonoBehaviour:
     isUnlocked: 0
     itemSkill: {fileID: 0}
     skillSpawnOffset: {x: 0, y: 1, z: 1}
+    skillSpawnEulerAngles: {x: 0, y: 0, z: 0}
   slowTimeScale: 0.2
   audioSource: {fileID: 210243277838738000}
   openSFX: {fileID: 0}
@@ -1380,7 +1385,7 @@ GameObject:
   - component: {fileID: 1040623090991551427}
   - component: {fileID: 210243277838738000}
   m_Layer: 0
-  m_Name: Player
+  m_Name: player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1507,6 +1512,10 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+  damageVignette: {fileID: 0}
+  fadeInSpeed: 5
+  fadeOutSpeed: 2
+  maxAlpha: 2
 --- !u!82 &210243277838738000
 AudioSource:
   m_ObjectHideFlags: 0

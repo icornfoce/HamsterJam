@@ -16,27 +16,31 @@ MonoBehaviour:
   - itemName: fan
     itemPrefab: {fileID: 7768556915814323043, guid: 00e6722510b86ce4198408bbcea3e685, type: 3}
     itemSize: {x: 1, y: 1, z: 1}
-    isUnlocked: 0
+    isUnlocked: 1
     itemSkill: {fileID: 3173945966694929641, guid: 79292c52672f2c54a828eb266a207487, type: 3}
     skillSpawnOffset: {x: 0, y: 1, z: 1}
+    skillSpawnEulerAngles: {x: 0, y: 0, z: 0}
   - itemName: water
     itemPrefab: {fileID: 6841551885571939741, guid: f7c312b92521ace4289f9c8facebbbb8, type: 3}
     itemSize: {x: 1, y: 1, z: 1}
     isUnlocked: 1
     itemSkill: {fileID: 6429312934497069207, guid: f7779fa3b8993934c893c008d1720b7e, type: 3}
     skillSpawnOffset: {x: 0, y: 1, z: 1}
+    skillSpawnEulerAngles: {x: 0, y: 0, z: 0}
   - itemName: ice cream
     itemPrefab: {fileID: 8361210970595336669, guid: 52ebe8258bbad2545b3558a5575338c6, type: 3}
     itemSize: {x: 1, y: 1, z: 1}
     isUnlocked: 0
     itemSkill: {fileID: 2525315933284846863, guid: c43ee4dca2c7faa4abda73073510f765, type: 3}
     skillSpawnOffset: {x: 0, y: 1, z: 1}
+    skillSpawnEulerAngles: {x: 0, y: 0, z: 0}
   - itemName: ice
     itemPrefab: {fileID: 7022710859829219038, guid: c118835eccad39a4495f468b23c5af86, type: 3}
     itemSize: {x: 1, y: 1, z: 1}
     isUnlocked: 1
     itemSkill: {fileID: 5336981644084247931, guid: 79292c52672f2c54a828eb266a207487, type: 3}
     skillSpawnOffset: {x: 0, y: 1, z: 1}
+    skillSpawnEulerAngles: {x: 0, y: 0, z: 0}
   combinations:
   - itemAName: fan
     itemBName: water
@@ -47,6 +51,7 @@ MonoBehaviour:
       isUnlocked: 0
       itemSkill: {fileID: 4165384610637891644, guid: c937a36f24543804fbba37dc084e83a7, type: 3}
       skillSpawnOffset: {x: 0, y: 1, z: 1}
+      skillSpawnEulerAngles: {x: 0, y: 0, z: 0}
   - itemAName: fan
     itemBName: fan
     resultItem:
@@ -54,8 +59,9 @@ MonoBehaviour:
       itemPrefab: {fileID: 7966731087305637596, guid: 0c33b9d2b3a31d34bbb98ee423abc004, type: 3}
       itemSize: {x: 1, y: 1, z: 1}
       isUnlocked: 0
-      itemSkill: {fileID: 4165384610637891644, guid: c937a36f24543804fbba37dc084e83a7, type: 3}
+      itemSkill: {fileID: 3024281698054047202, guid: 5d8bf5999615ffa4291d9de870894be3, type: 3}
       skillSpawnOffset: {x: 0, y: 1, z: 1}
+      skillSpawnEulerAngles: {x: 270, y: 0, z: 0}
   - itemAName: fan
     itemBName: ice
     resultItem:
@@ -63,8 +69,9 @@ MonoBehaviour:
       itemPrefab: {fileID: 122790, guid: 1bec46c1170f1df4abceae69ff35d82b, type: 3}
       itemSize: {x: 1, y: 1, z: 1}
       isUnlocked: 0
-      itemSkill: {fileID: 4165384610637891644, guid: c937a36f24543804fbba37dc084e83a7, type: 3}
+      itemSkill: {fileID: 3781210254469517235, guid: 8013f87c4c1f8ec4ab22210e2a3488b0, type: 3}
       skillSpawnOffset: {x: 0, y: 1, z: 1}
+      skillSpawnEulerAngles: {x: 0, y: -90, z: 0}
   - itemAName: fan
     itemBName: ice cream
     resultItem:
@@ -72,8 +79,9 @@ MonoBehaviour:
       itemPrefab: {fileID: 8137429522532179340, guid: 62a81171586342f46bdb2bb1d191aeca, type: 3}
       itemSize: {x: 1, y: 1, z: 1}
       isUnlocked: 0
-      itemSkill: {fileID: 4165384610637891644, guid: c937a36f24543804fbba37dc084e83a7, type: 3}
+      itemSkill: {fileID: 8137429522532179340, guid: 62a81171586342f46bdb2bb1d191aeca, type: 3}
       skillSpawnOffset: {x: 0, y: 1, z: 1}
+      skillSpawnEulerAngles: {x: 0, y: 0, z: 0}
   - itemAName: water
     itemBName: water
     resultItem:
@@ -83,6 +91,7 @@ MonoBehaviour:
       isUnlocked: 0
       itemSkill: {fileID: 4006964074200084299, guid: 92f2b09c6fd63cd4f92c6a193ee913c2, type: 3}
       skillSpawnOffset: {x: 0, y: 1, z: 1}
+      skillSpawnEulerAngles: {x: 0, y: 0, z: 0}
   - itemAName: ice cream
     itemBName: ice cream
     resultItem:
@@ -92,6 +101,7 @@ MonoBehaviour:
       isUnlocked: 0
       itemSkill: {fileID: 7707086376604634516, guid: 23983aeae37313e468a252519247d0c2, type: 3}
       skillSpawnOffset: {x: 0, y: 1, z: 1}
+      skillSpawnEulerAngles: {x: 0, y: 0, z: 0}
   - itemAName: ice
     itemBName: ice
     resultItem:
@@ -101,6 +111,7 @@ MonoBehaviour:
       isUnlocked: 0
       itemSkill: {fileID: 7803167677400753276, guid: 483a33d0836a4314abaee6a2b21b22f7, type: 3}
       skillSpawnOffset: {x: 0, y: 1, z: 1}
+      skillSpawnEulerAngles: {x: 0, y: 0, z: 0}
   - itemAName: ice
     itemBName: water
     resultItem:
@@ -110,3 +121,4 @@ MonoBehaviour:
       isUnlocked: 0
       itemSkill: {fileID: 9091161176083420810, guid: 3cf6a746b541e234eae4331b2a6d4f25, type: 3}
       skillSpawnOffset: {x: 0, y: 1, z: 1}
+      skillSpawnEulerAngles: {x: 0, y: 0, z: 0}

@@ -7,6 +7,16 @@ public class TypingSystem : MonoBehaviour
     [SerializeField] private GameObject typingUI; 
     [SerializeField] private TMP_InputField inputField;
 
+    [Header("Vignette Effects")]
+    [Tooltip("ลาก Q_Vignette_Base (ตั้งเป็นสีโทนมืด) มาใส่ช่องนี้")]
+    [SerializeField] private Q_Vignette_Base typingVignette;
+    [Tooltip("ความเร็วในการเข้มขึ้น/จางลงของ Overlay")]
+    [SerializeField] private float overlayFadeSpeed = 10f;
+    [Tooltip("ความเข้มสูงสุดตอนพิมพ์ (0-1)")]
+    [SerializeField] private float maxOverlayAlpha = 0.8f;
+
+    private float currentOverlayAlpha = 0f;
+
     [Header("Matched Items Slots")]
     [SerializeField] private ItemInfo firstItem;
     [SerializeField] private ItemInfo secondItem;
@@ -63,6 +73,14 @@ public class TypingSystem : MonoBehaviour
             if (player != null) playerTransform = player.transform;
             else playerTransform = transform; // ถ้าหาไม่เจอจริงๆ ให้ใช้ตัวเองไปก่อน
         }
+
+        // กำหนดโปร่งใสเริ่มต้น
+        if (typingVignette != null)
+        {
+            currentOverlayAlpha = 0f;
+            SetTypingVignetteAlpha(0f);
+            typingVignette.gameObject.SetActive(false);
+        }
     }
 
 
@@ -95,8 +113,40 @@ public class TypingSystem : MonoBehaviour
             }
         }
 
+        // อัปเดตความเข้มของ Q Vignette ตอนพิมพ์
+        if (typingVignette != null)
+        {
+            float targetAlpha = isSlowed ? maxOverlayAlpha : 0f;
+            // ใช้ Time.unscaledDeltaTime เพราะเกมถูก slow อยู่
+            currentOverlayAlpha = Mathf.MoveTowards(currentOverlayAlpha, targetAlpha, overlayFadeSpeed * Time.unscaledDeltaTime);
+            SetTypingVignetteAlpha(currentOverlayAlpha);
+
+            if (currentOverlayAlpha > 0 && !typingVignette.gameObject.activeSelf)
+            {
+                typingVignette.gameObject.SetActive(true);
+            }
+            else if (currentOverlayAlpha <= 0 && typingVignette.gameObject.activeSelf)
+            {
+                typingVignette.gameObject.SetActive(false);
+            }
+        }
+
         // ทำให้ไอเทมที่ลอยอยู่มีการขยับขึ้นลง (Bobbing Effect)
         ApplyFloatingEffect();
+    }
+
+    private void SetTypingVignetteAlpha(float alpha)
+    {
+        if (typingVignette.cornerImages == null) return;
+        for (int i = 0; i < typingVignette.cornerImages.Length; i++)
+        {
+            if (typingVignette.cornerImages[i] != null)
+            {
+                Color c = typingVignette.cornerImages[i].color;
+                c.a = alpha;
+                typingVignette.cornerImages[i].color = c;
+            }
+        }
     }
 
     private void ApplyFloatingEffect()
