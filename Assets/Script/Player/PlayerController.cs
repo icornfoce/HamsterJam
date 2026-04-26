@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float walkSpeed = 5f;
+    public float gravity = -19.62f;
 
     [Header("Cinemachine Settings")]
     [Tooltip("ลาก Main Camera จากหน้าต่าง Hierarchy มาใส่ตรงนี้ (หรือปล่อยว่างไว้ระบบจะหาเอง)")]
@@ -25,6 +26,8 @@ public class PlayerController : MonoBehaviour
     public int currentHealth;
 
     private CharacterController controller;
+    private Vector3 velocity;
+    private bool isGrounded;
 
     void Start()
     {
@@ -77,6 +80,13 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
+        // เช็คว่าเท้าแตะพื้นหรือไม่
+        isGrounded = controller.isGrounded;
+        if (isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f; // กดลงเล็กน้อยเพื่อให้ติดพื้นแน่นๆ
+        }
+
         // รับค่า Input
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
@@ -89,8 +99,12 @@ public class PlayerController : MonoBehaviour
         // คำนวณทิศทางโดยอิงจากตัวละคร (ซึ่งหันหน้าตามกล้อง)
         Vector3 move = transform.right * x + transform.forward * z;
 
-        // เคลื่อนที่ (ตัดแกน Y ออกเพราะไม่ต้องใช้แรงโน้มถ่วง/กระโดด)
+        // เคลื่อนที่ตามแนวราบ
         controller.Move(move * walkSpeed * Time.deltaTime);
+
+        // แรงโน้มถ่วง
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
 
         // --- อัปเดต Animation สำหรับ 2D Blend Tree ---
         if (animator != null)
