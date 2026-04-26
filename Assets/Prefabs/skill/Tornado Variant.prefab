@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5149843739251047230
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7966731087305637596, guid: 0c33b9d2b3a31d34bbb98ee423abc004, type: 3}
+      propertyPath: m_Name
+      value: Tornado Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8709216932701153501, guid: 0c33b9d2b3a31d34bbb98ee423abc004, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.4595904
+      objectReference: {fileID: 0}
+    - target: {fileID: 8709216932701153501, guid: 0c33b9d2b3a31d34bbb98ee423abc004, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.00000018599309
+      objectReference: {fileID: 0}
+    - target: {fileID: 8709216932701153501, guid: 0c33b9d2b3a31d34bbb98ee423abc004, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -7.8256955
+      objectReference: {fileID: 0}
+    - target: {fileID: 8709216932701153501, guid: 0c33b9d2b3a31d34bbb98ee423abc004, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8709216932701153501, guid: 0c33b9d2b3a31d34bbb98ee423abc004, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8709216932701153501, guid: 0c33b9d2b3a31d34bbb98ee423abc004, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8709216932701153501, guid: 0c33b9d2b3a31d34bbb98ee423abc004, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8709216932701153501, guid: 0c33b9d2b3a31d34bbb98ee423abc004, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8709216932701153501, guid: 0c33b9d2b3a31d34bbb98ee423abc004, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8709216932701153501, guid: 0c33b9d2b3a31d34bbb98ee423abc004, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7966731087305637596, guid: 0c33b9d2b3a31d34bbb98ee423abc004, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6254165108704013167}
+  m_SourcePrefab: {fileID: 100100000, guid: 0c33b9d2b3a31d34bbb98ee423abc004, type: 3}
+--- !u!1 &3024281698054047202 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7966731087305637596, guid: 0c33b9d2b3a31d34bbb98ee423abc004, type: 3}
+  m_PrefabInstance: {fileID: 5149843739251047230}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6254165108704013167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3024281698054047202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f8d8152d7804f5429aaf65a1aad8b46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TornadoSkill
+  voiceClip: {fileID: 0}
+  voiceVolume: 1
+  pullRadius: 14
+  duration: 4
+  damagePerTick: 6
+  tickInterval: 0.3
+  pullForce: 8
+  spinForce: 12
+  liftForce: 3
+  throwForce: 20
+  throwDuration: 0.6
+  tornadoVFXPrefab: {fileID: 0}
+  tornadoSFX: {fileID: 0}

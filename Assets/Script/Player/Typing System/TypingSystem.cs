@@ -341,7 +341,10 @@ public class TypingSystem : MonoBehaviour
                 + playerTransform.up      * item.skillSpawnOffset.y   // บน/ล่าง
                 + playerTransform.forward * item.skillSpawnOffset.z;  // หน้า/หลัง
 
-            GameObject skillObj = Instantiate(item.itemSkill, spawnPos, playerTransform.rotation);
+            // คำนวณองศาการเกิด โดยอ้างอิงจากมุมที่ Player หันหน้าอยู่ และบวกด้วยองศาที่ตั้งไว้ใน ItemData
+            Quaternion spawnRot = playerTransform.rotation * Quaternion.Euler(item.skillSpawnEulerAngles);
+
+            GameObject skillObj = Instantiate(item.itemSkill, spawnPos, spawnRot);
             
             BaseItemSkill skill = skillObj.GetComponent<BaseItemSkill>();
             if (skill != null)

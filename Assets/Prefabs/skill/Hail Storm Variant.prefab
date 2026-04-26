@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3781210254469599253
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 122790, guid: 1bec46c1170f1df4abceae69ff35d82b, type: 3}
+      propertyPath: m_Name
+      value: Hail Storm Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 468086, guid: 1bec46c1170f1df4abceae69ff35d82b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.082417
+      objectReference: {fileID: 0}
+    - target: {fileID: 468086, guid: 1bec46c1170f1df4abceae69ff35d82b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0000010639371
+      objectReference: {fileID: 0}
+    - target: {fileID: 468086, guid: 1bec46c1170f1df4abceae69ff35d82b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.2915013
+      objectReference: {fileID: 0}
+    - target: {fileID: 468086, guid: 1bec46c1170f1df4abceae69ff35d82b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 468086, guid: 1bec46c1170f1df4abceae69ff35d82b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 468086, guid: 1bec46c1170f1df4abceae69ff35d82b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 468086, guid: 1bec46c1170f1df4abceae69ff35d82b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 468086, guid: 1bec46c1170f1df4abceae69ff35d82b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 468086, guid: 1bec46c1170f1df4abceae69ff35d82b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 468086, guid: 1bec46c1170f1df4abceae69ff35d82b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 122790, guid: 1bec46c1170f1df4abceae69ff35d82b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3452800901266830234}
+  m_SourcePrefab: {fileID: 100100000, guid: 1bec46c1170f1df4abceae69ff35d82b, type: 3}
+--- !u!1 &3781210254469517235 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 122790, guid: 1bec46c1170f1df4abceae69ff35d82b, type: 3}
+  m_PrefabInstance: {fileID: 3781210254469599253}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3452800901266830234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3781210254469517235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14b955b113d5dc147af40583a4b921b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HailStormSkill
+  voiceClip: {fileID: 0}
+  voiceVolume: 1
+  stormRadius: 10
+  duration: 4
+  hailPerSecond: 8
+  damagePerHail: 10
+  hailSplashRadius: 3
+  slowPercent: 0.4
+  slowDuration: 2
+  hailPrefab: {fileID: 0}
+  spawnHeight: 15
+  fallSpeed: 30
+  stormStartSFX: {fileID: 0}
+  hailHitSFX: {fileID: 0}
+  stormVFXPrefab: {fileID: 0}
