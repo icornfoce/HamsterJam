@@ -334,7 +334,14 @@ public class TypingSystem : MonoBehaviour
         // ── เรียกใช้ Skill ของไอเทมนี้ (ถ้ามี) ──
         if (item.itemSkill != null)
         {
-            GameObject skillObj = Instantiate(item.itemSkill, playerTransform.position, playerTransform.rotation);
+            // คำนวณจุดเกิดสกิล โดยใช้ค่า Offset ที่ตั้งไว้ใน ItemData
+            // แปลง Local Offset ให้เป็น World Position (คำนึงถึงทิศทางที่ Player หันหน้าอยู่)
+            Vector3 spawnPos = playerTransform.position
+                + playerTransform.right   * item.skillSpawnOffset.x   // ซ้าย/ขวา
+                + playerTransform.up      * item.skillSpawnOffset.y   // บน/ล่าง
+                + playerTransform.forward * item.skillSpawnOffset.z;  // หน้า/หลัง
+
+            GameObject skillObj = Instantiate(item.itemSkill, spawnPos, playerTransform.rotation);
             
             BaseItemSkill skill = skillObj.GetComponent<BaseItemSkill>();
             if (skill != null)
