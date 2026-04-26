@@ -1726,7 +1726,7 @@ GameObject:
   - component: {fileID: 4210914318428336791}
   - component: {fileID: 7822753204050536685}
   m_Layer: 0
-  m_Name: ZombieMale_AAB_URP
+  m_Name: flame guy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
