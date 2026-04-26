@@ -17,6 +17,16 @@ public class BigIceCreamSkill : BaseItemSkill
     [Tooltip("เสียงที่จะเล่นตอนฮีล (ไม่บังคับ)")]
     public AudioClip healSFX;
 
+    [Header("Animation Settings")]
+    [Tooltip("จุดที่จะไปโผล่บนหัวผู้เล่น (Local Offset)")]
+    public Vector3 headOffset = new Vector3(0f, 2.5f, 0f);
+    [Tooltip("ความเร็วในการลอยขึ้น")]
+    public float floatSpeed = 1.5f;
+    [Tooltip("ความเร็วในการหดเล็กลงจนหายไป")]
+    public float shrinkSpeed = 1.5f;
+
+    private bool isActivated = false;
+
     public override void Activate(Transform playerTransform)
     {
         PlayerHealth playerHealth = playerTransform.GetComponent<PlayerHealth>();
@@ -44,7 +54,29 @@ public class BigIceCreamSkill : BaseItemSkill
             Destroy(vfx, 2f);
         }
 
-        // ทำลายตัวเองหลังจากทำงานเสร็จ
-        Destroy(gameObject);
+        // ไปเกาะบนหัว Player
+        transform.SetParent(playerTransform);
+        transform.localPosition = headOffset;
+        transform.localRotation = Quaternion.identity;
+
+        isActivated = true;
+    }
+
+    private void Update()
+    {
+        if (isActivated)
+        {
+            // ลอยขึ้นเรื่อยๆ
+            transform.Translate(Vector3.up * floatSpeed * Time.deltaTime, Space.World);
+
+            // ค่อยๆ หดเล็กลง
+            transform.localScale = Vector3.MoveTowards(transform.localScale, Vector3.zero, shrinkSpeed * Time.deltaTime);
+
+            // ถ้าหดจนมองไม่เห็นแล้ว ให้ทำลายทิ้ง
+            if (transform.localScale.sqrMagnitude < 0.001f)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 }

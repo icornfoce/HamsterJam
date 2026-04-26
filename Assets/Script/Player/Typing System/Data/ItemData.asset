@@ -16,7 +16,7 @@ MonoBehaviour:
   - itemName: fan
     itemPrefab: {fileID: 7768556915814323043, guid: 00e6722510b86ce4198408bbcea3e685, type: 3}
     itemSize: {x: 1, y: 1, z: 1}
-    isUnlocked: 1
+    isUnlocked: 0
     itemSkill: {fileID: 3173945966694929641, guid: 79292c52672f2c54a828eb266a207487, type: 3}
     skillSpawnOffset: {x: 0, y: 1, z: 1}
     skillSpawnEulerAngles: {x: 0, y: 0, z: 0}
@@ -24,20 +24,20 @@ MonoBehaviour:
     itemPrefab: {fileID: 6841551885571939741, guid: f7c312b92521ace4289f9c8facebbbb8, type: 3}
     itemSize: {x: 1, y: 1, z: 1}
     isUnlocked: 1
-    itemSkill: {fileID: 6429312934497069207, guid: f7779fa3b8993934c893c008d1720b7e, type: 3}
+    itemSkill: {fileID: 5974756151701262875, guid: e906589d2210dd24389bae9bb17b0ba4, type: 3}
     skillSpawnOffset: {x: 0, y: 1, z: 1}
     skillSpawnEulerAngles: {x: 0, y: 0, z: 0}
   - itemName: ice cream
     itemPrefab: {fileID: 8361210970595336669, guid: 52ebe8258bbad2545b3558a5575338c6, type: 3}
     itemSize: {x: 1, y: 1, z: 1}
-    isUnlocked: 0
-    itemSkill: {fileID: 2525315933284846863, guid: c43ee4dca2c7faa4abda73073510f765, type: 3}
+    isUnlocked: 1
+    itemSkill: {fileID: 5790204512679107926, guid: 6afc2d2c3d5958b42807b588cd42d6c4, type: 3}
     skillSpawnOffset: {x: 0, y: 1, z: 1}
     skillSpawnEulerAngles: {x: 0, y: 0, z: 0}
   - itemName: ice
     itemPrefab: {fileID: 7022710859829219038, guid: c118835eccad39a4495f468b23c5af86, type: 3}
     itemSize: {x: 1, y: 1, z: 1}
-    isUnlocked: 1
+    isUnlocked: 0
     itemSkill: {fileID: 5336981644084247931, guid: 79292c52672f2c54a828eb266a207487, type: 3}
     skillSpawnOffset: {x: 0, y: 1, z: 1}
     skillSpawnEulerAngles: {x: 0, y: 0, z: 0}
@@ -99,7 +99,7 @@ MonoBehaviour:
       itemPrefab: {fileID: 7707086376604634516, guid: 23983aeae37313e468a252519247d0c2, type: 3}
       itemSize: {x: 1, y: 1, z: 1}
       isUnlocked: 0
-      itemSkill: {fileID: 7707086376604634516, guid: 23983aeae37313e468a252519247d0c2, type: 3}
+      itemSkill: {fileID: 7244017303350777292, guid: 57a8722aa7b13534e9d1dc08567e4168, type: 3}
       skillSpawnOffset: {x: 0, y: 1, z: 1}
       skillSpawnEulerAngles: {x: 0, y: 0, z: 0}
   - itemAName: ice
