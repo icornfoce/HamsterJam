@@ -318,7 +318,7 @@ GameObject:
   - component: {fileID: 4916607283804188061}
   - component: {fileID: 4966255193328820147}
   m_Layer: 0
-  m_Name: LittleGhost_1
+  m_Name: firespirit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

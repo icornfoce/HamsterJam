@@ -96,7 +96,16 @@ MonoBehaviour:
     itemBName: ice
     resultItem:
       itemName: ice sword
-      itemPrefab: {fileID: 7707086376604634516, guid: 23983aeae37313e468a252519247d0c2, type: 3}
+      itemPrefab: {fileID: 8608647142105065880, guid: 3ce133d17fb42f5438b4b854675bc1ed, type: 3}
+      itemSize: {x: 1, y: 1, z: 1}
+      isUnlocked: 0
+      itemSkill: {fileID: 4165384610637891644, guid: c937a36f24543804fbba37dc084e83a7, type: 3}
+      skillSpawnOffset: {x: 0, y: 1, z: 1}
+  - itemAName: ice
+    itemBName: water
+    resultItem:
+      itemName: snow ball shot gun
+      itemPrefab: {fileID: 8608647142105065880, guid: 3ce133d17fb42f5438b4b854675bc1ed, type: 3}
       itemSize: {x: 1, y: 1, z: 1}
       isUnlocked: 0
       itemSkill: {fileID: 4165384610637891644, guid: c937a36f24543804fbba37dc084e83a7, type: 3}
