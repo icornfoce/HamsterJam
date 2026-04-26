@@ -16,13 +16,13 @@ MonoBehaviour:
   - itemName: fan
     itemPrefab: {fileID: 7768556915814323043, guid: 00e6722510b86ce4198408bbcea3e685, type: 3}
     itemSize: {x: 1, y: 1, z: 1}
-    isUnlocked: 1
+    isUnlocked: 0
     itemSkill: {fileID: 3173945966694929641, guid: 79292c52672f2c54a828eb266a207487, type: 3}
     skillSpawnOffset: {x: 0, y: 1, z: 1}
   - itemName: water
     itemPrefab: {fileID: 6841551885571939741, guid: f7c312b92521ace4289f9c8facebbbb8, type: 3}
     itemSize: {x: 1, y: 1, z: 1}
-    isUnlocked: 1
+    isUnlocked: 0
     itemSkill: {fileID: 6377765606879312844, guid: f7779fa3b8993934c893c008d1720b7e, type: 3}
     skillSpawnOffset: {x: 0, y: 1, z: 1}
   - itemName: ice cream
@@ -42,6 +42,60 @@ MonoBehaviour:
     itemBName: water
     resultItem:
       itemName: rain
+      itemPrefab: {fileID: 7707086376604634516, guid: 23983aeae37313e468a252519247d0c2, type: 3}
+      itemSize: {x: 1, y: 1, z: 1}
+      isUnlocked: 0
+      itemSkill: {fileID: 4165384610637891644, guid: c937a36f24543804fbba37dc084e83a7, type: 3}
+      skillSpawnOffset: {x: 0, y: 1, z: 1}
+  - itemAName: fan
+    itemBName: fan
+    resultItem:
+      itemName: Tornado
+      itemPrefab: {fileID: 7966731087305637596, guid: 0c33b9d2b3a31d34bbb98ee423abc004, type: 3}
+      itemSize: {x: 1, y: 1, z: 1}
+      isUnlocked: 0
+      itemSkill: {fileID: 4165384610637891644, guid: c937a36f24543804fbba37dc084e83a7, type: 3}
+      skillSpawnOffset: {x: 0, y: 1, z: 1}
+  - itemAName: fan
+    itemBName: ice
+    resultItem:
+      itemName: Hail storm
+      itemPrefab: {fileID: 122790, guid: 1bec46c1170f1df4abceae69ff35d82b, type: 3}
+      itemSize: {x: 1, y: 1, z: 1}
+      isUnlocked: 0
+      itemSkill: {fileID: 4165384610637891644, guid: c937a36f24543804fbba37dc084e83a7, type: 3}
+      skillSpawnOffset: {x: 0, y: 1, z: 1}
+  - itemAName: fan
+    itemBName: ice cream
+    resultItem:
+      itemName: ice cream bullets
+      itemPrefab: {fileID: 8137429522532179340, guid: 62a81171586342f46bdb2bb1d191aeca, type: 3}
+      itemSize: {x: 1, y: 1, z: 1}
+      isUnlocked: 0
+      itemSkill: {fileID: 4165384610637891644, guid: c937a36f24543804fbba37dc084e83a7, type: 3}
+      skillSpawnOffset: {x: 0, y: 1, z: 1}
+  - itemAName: water
+    itemBName: water
+    resultItem:
+      itemName: water domain
+      itemPrefab: {fileID: 6330053056624616938, guid: 75359fd73430e73469f135518dcb0c6f, type: 3}
+      itemSize: {x: 1, y: 1, z: 1}
+      isUnlocked: 0
+      itemSkill: {fileID: 4165384610637891644, guid: c937a36f24543804fbba37dc084e83a7, type: 3}
+      skillSpawnOffset: {x: 0, y: 1, z: 1}
+  - itemAName: ice cream
+    itemBName: ice cream
+    resultItem:
+      itemName: big ice cream
+      itemPrefab: {fileID: 7707086376604634516, guid: 23983aeae37313e468a252519247d0c2, type: 3}
+      itemSize: {x: 1, y: 1, z: 1}
+      isUnlocked: 0
+      itemSkill: {fileID: 4165384610637891644, guid: c937a36f24543804fbba37dc084e83a7, type: 3}
+      skillSpawnOffset: {x: 0, y: 1, z: 1}
+  - itemAName: ice
+    itemBName: ice
+    resultItem:
+      itemName: ice sword
       itemPrefab: {fileID: 7707086376604634516, guid: 23983aeae37313e468a252519247d0c2, type: 3}
       itemSize: {x: 1, y: 1, z: 1}
       isUnlocked: 0
