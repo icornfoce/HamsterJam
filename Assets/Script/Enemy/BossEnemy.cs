@@ -52,6 +52,9 @@ public class BossEnemy : MonoBehaviour
     [Tooltip("รัศมีกระจายตัวของลูกน้องรอบๆ Furnace")]
     public float summonRadius = 3f;
 
+    [Tooltip("คูลดาวน์ระหว่างการ Summon แต่ละครั้ง (CC)")]
+    public float summonCooldown = 4f;
+
     // ══════════════════════════════════════════════
     [Header("แอนิเมชัน")]
     public Animator animator;
@@ -74,11 +77,23 @@ public class BossEnemy : MonoBehaviour
     [Tooltip("ลาก Script BossHealthBar (แบบแถบใหญ่บนจอ) มาใส่")]
     public BossHealthBar bossHealthBar;
 
+    [Header("เสียง (Sound Effects)")]
+    public AudioClip spawnSFX;
+    public AudioClip walkSFX;
+    public AudioClip meleeSFX;
+    public AudioClip rangeSFX;
+    public AudioClip summonSFX;
+    public AudioClip deathSFX;
+    private AudioSource audioSource;
+    private AudioSource walkAudioSource;
+
     // ══════════════════════════════════════════════
     //  Private
     // ══════════════════════════════════════════════
     private int          currentHealth;
     private int          summonThresholdIndex = 0;   // ดัชนี threshold ถัดไป
+    private int          pendingSummonCount   = 0;   // จำนวนโควตาที่รอ Summon
+    private float        nextSummonTime       = 0f;  // เวลาที่จะ Summon ครั้งถัดไปได้
 
     // Threshold HP ที่ต้อง Summon: 80%, 60%, 40%, 20%
     private readonly float[] summonThresholds = { 0.8f, 0.6f, 0.4f, 0.2f };
@@ -109,6 +124,19 @@ public class BossEnemy : MonoBehaviour
 
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        // ตั้งค่า AudioSource สำหรับเสียงเดิน (Loop)
+        walkAudioSource = gameObject.AddComponent<AudioSource>();
+        walkAudioSource.clip = walkSFX;
+        walkAudioSource.loop = true;
+        walkAudioSource.playOnAwake = false;
+        walkAudioSource.spatialBlend = 1f; // ให้เป็นเสียง 3D
+
+        PlaySound(spawnSFX);
 
         // ── Setup Health Bar ────────────────────────
         if (bossHealthBar != null)
@@ -153,10 +181,11 @@ public class BossEnemy : MonoBehaviour
 
         float dist = Vector3.Distance(transform.position, playerTransform.position);
 
-        // ──── ประมวลผลพฤติกรรม ────
+        // ──── ประมวลผลพฤติกรรมตามลำดับความสำคัญ ────
+
+        // 1. Melee Attack (สำคัญที่สุด - ถ้าเข้าระยะให้ตีใกล้ก่อน)
         if (dist <= meleeRange)
         {
-            // ── โจมตีธรรมดา (Melee) ─────────────────────
             agent.isStopped = true;
             FaceTarget(playerTransform.position);
 
@@ -166,27 +195,46 @@ public class BossEnemy : MonoBehaviour
                 nextMeleeTime = Time.time + meleeCooldown;
             }
         }
+        // 2. Summon (ถ้าไม่อยู่ในระยะ Melee, มีคิวค้างอยู่ และ Cooldown พร้อม)
+        else if (pendingSummonCount > 0 && Time.time >= nextSummonTime)
+        {
+            agent.isStopped = true;
+            Debug.Log($"<color=cyan>[Boss] กำลังร่ายสกิล Summon... (คิวรอ: {pendingSummonCount})</color>");
+            SummonMinions();
+            pendingSummonCount--;
+            nextSummonTime = Time.time + summonCooldown;
+        }
+        // 3. Range Attack (ถ้า Summon ไม่ได้และอยู่ในระยะยิง)
         else if (dist <= rangeAttackRange && Time.time >= nextRangeTime)
         {
-            // ── ยิงกระสุน (Range Attack) ─────────────
             agent.isStopped = true;
             FaceTarget(playerTransform.position);
 
             StartCoroutine(RangeAttackRoutine());
             nextRangeTime = Time.time + rangeCooldown;
         }
+        // 4. Chase (กรณีอื่นทั้งหมด)
         else
         {
-            // ── วิ่งเข้าหา (Chase) ──────────────────────────────
             agent.isStopped = false;
             agent.SetDestination(playerTransform.position);
         }
 
-        // ──── แอนิเมชันวิ่ง ────
+        // ──── แอนิเมชันวิ่ง และ เสียงเดิน ────
         if (animator != null)
         {
             bool isMoving = agent.velocity.magnitude > 0.1f && !agent.isStopped;
             animator.SetBool(runAnimBool, isMoving);
+
+            // จัดการเสียงเดิน
+            if (isMoving && !walkAudioSource.isPlaying)
+            {
+                if (walkSFX != null) walkAudioSource.Play();
+            }
+            else if (!isMoving && walkAudioSource.isPlaying)
+            {
+                walkAudioSource.Stop();
+            }
         }
     }
 
@@ -194,6 +242,9 @@ public class BossEnemy : MonoBehaviour
     /// <summary>รับดาเมจจากผู้เล่นหรือสิ่งอื่น</summary>
     public void TakeDamage(int damage)
     {
+        // เช็คว่ามีดาเมจเข้ามาจริงไหม
+        Debug.Log($"<color=yellow>[Boss] โดนโจมตี! ดาเมจที่ได้รับ: {damage} | เลือดคงเหลือ: {currentHealth - damage}/{maxHealth}</color>");
+
         if (currentHealth <= 0) return; // ถ้าตายแล้ว ไม่รับดาเมจเพิ่ม
 
         currentHealth -= damage;
@@ -226,8 +277,8 @@ public class BossEnemy : MonoBehaviour
         while (summonThresholdIndex < summonThresholds.Length &&
                hpRatio <= summonThresholds[summonThresholdIndex])
         {
-            Debug.Log($"[Furnace] HP ถึง {summonThresholds[summonThresholdIndex] * 100}% → Summon ลูกน้อง!");
-            SummonMinions();
+            Debug.Log($"[Furnace] HP ถึง {summonThresholds[summonThresholdIndex] * 100}% → จองคิว Summon!");
+            pendingSummonCount++; // เพิ่มจำนวนโควตาที่ต้องเรียกใช้
             summonThresholdIndex++;
         }
     }
@@ -244,6 +295,8 @@ public class BossEnemy : MonoBehaviour
 
         if (animator != null)
             animator.SetTrigger(summonTrig);
+
+        PlaySound(summonSFX);
 
         // หยุดเดินขณะ Summon
         StartCoroutine(StopForSkill(1.5f)); // ปรับเวลาตามความยาวแอนิเมชัน Summon
@@ -268,6 +321,8 @@ public class BossEnemy : MonoBehaviour
         if (animator != null)
             animator.SetTrigger(meleeAttackTrig);
 
+        PlaySound(meleeSFX);
+
         if (playerHealth != null)
         {
             playerHealth.TakeDamage(meleeDamage);
@@ -281,6 +336,8 @@ public class BossEnemy : MonoBehaviour
     {
         if (animator != null)
             animator.SetTrigger(rangeAttackTrig);
+
+        PlaySound(rangeSFX);
 
         // หยุดเดินขณะยิง
         isPerformingSkill = true;
@@ -345,7 +402,10 @@ public class BossEnemy : MonoBehaviour
     // ══════════════════════════════════════════════
     private void Die()
     {
-        Debug.Log("[Furnace] ถูกทำลาย!");
+        Debug.Log("[Boss] ถูกทำลาย!");
+
+        if (walkAudioSource != null) walkAudioSource.Stop();
+        PlaySound(deathSFX);
 
         if (bossHealthBar != null)
             bossHealthBar.Hide();
@@ -368,6 +428,14 @@ public class BossEnemy : MonoBehaviour
 
         // รอหน่วงเวลา (deathDelay) ก่อนทำลาย object เพื่อให้แอนิเมชันตายเล่นจบ
         Destroy(gameObject, deathDelay);
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 
     // ══════════════════════════════════════════════

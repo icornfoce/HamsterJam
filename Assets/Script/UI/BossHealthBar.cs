@@ -6,11 +6,14 @@ using TMPro;
 public class BossHealthBar : MonoBehaviour
 {
     [Header("UI Components")]
-    [SerializeField] private Slider mainSlider;
-    [SerializeField] private Slider chipSlider; // For the "trailing" effect
-    [SerializeField] private Image fillImage;
+    [SerializeField] private RawImage mainRawImage;
+    [SerializeField] private RawImage chipRawImage; 
     [SerializeField] private TextMeshProUGUI bossNameText;
     [SerializeField] private CanvasGroup canvasGroup;
+
+    private float maxWidth;
+    private float currentMainRatio = 1f;
+    private float currentChipRatio = 1f;
 
     [Header("Settings")]
     [SerializeField] private string bossName = "FURNACE";
@@ -23,6 +26,9 @@ public class BossHealthBar : MonoBehaviour
     {
         if (canvasGroup != null) canvasGroup.alpha = 0;
         if (bossNameText != null) bossNameText.text = bossName;
+
+        if (mainRawImage != null)
+            maxWidth = mainRawImage.rectTransform.sizeDelta.x;
     }
 
     public void Show()
@@ -39,23 +45,39 @@ public class BossHealthBar : MonoBehaviour
 
     public void UpdateHealth(float current, float max)
     {
-        float ratio = current / max;
-        mainSlider.value = ratio;
+        float ratio = Mathf.Clamp01(current / max);
+        currentMainRatio = ratio;
+        UpdateVisual(mainRawImage, currentMainRatio);
 
         if (chipCoroutine != null) StopCoroutine(chipCoroutine);
         chipCoroutine = StartCoroutine(SmoothChip(ratio));
     }
 
+    private void UpdateVisual(RawImage img, float ratio)
+    {
+        if (img == null) return;
+        
+        // ถ้า maxWidth ยังไม่ได้ถูกตั้งค่า (เช่น Awake ยังไม่ทำงาน) ให้หาค่าตอนนี้เลย
+        if (maxWidth <= 0)
+            maxWidth = img.rectTransform.sizeDelta.x;
+
+        // ตัดภาพจากขวาไปซ้ายโดยไม่บีบสัดส่วน
+        img.rectTransform.sizeDelta = new Vector2(maxWidth * ratio, img.rectTransform.sizeDelta.y);
+        img.uvRect = new Rect(0, 0, ratio, 1);
+    }
+
     private IEnumerator SmoothChip(float targetRatio)
     {
-        yield return new WaitForSeconds(0.5f); // Delay before chip follows
+        yield return new WaitForSeconds(0.5f); // หน่วงเวลาก่อนเลือดแดงจะลดตาม
         
-        while (Mathf.Abs(chipSlider.value - targetRatio) > 0.001f)
+        while (Mathf.Abs(currentChipRatio - targetRatio) > 0.001f)
         {
-            chipSlider.value = Mathf.Lerp(chipSlider.value, targetRatio, Time.deltaTime * chipSpeed * 10f);
+            currentChipRatio = Mathf.Lerp(currentChipRatio, targetRatio, Time.deltaTime * chipSpeed * 10f);
+            UpdateVisual(chipRawImage, currentChipRatio);
             yield return null;
         }
-        chipSlider.value = targetRatio;
+        currentChipRatio = targetRatio;
+        UpdateVisual(chipRawImage, currentChipRatio);
     }
 
     private IEnumerator Fade(float targetAlpha)
