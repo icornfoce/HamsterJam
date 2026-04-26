@@ -648,6 +648,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6756294879740032805, guid: aeb6053232d4399438f887c82d613546, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1024,12 +1028,14 @@ MonoBehaviour:
     itemSize: {x: 0, y: 0, z: 0}
     isUnlocked: 0
     itemSkill: {fileID: 0}
+    skillSpawnOffset: {x: 0, y: 1, z: 1}
   secondItem:
     itemName: 
     itemPrefab: {fileID: 0}
     itemSize: {x: 0, y: 0, z: 0}
     isUnlocked: 0
     itemSkill: {fileID: 0}
+    skillSpawnOffset: {x: 0, y: 1, z: 1}
   slowTimeScale: 0.2
   audioSource: {fileID: 0}
   openSFX: {fileID: 0}
@@ -1167,12 +1173,14 @@ MonoBehaviour:
     itemSize: {x: 0, y: 0, z: 0}
     isUnlocked: 0
     itemSkill: {fileID: 0}
+    skillSpawnOffset: {x: 0, y: 1, z: 1}
   secondItem:
     itemName: 
     itemPrefab: {fileID: 0}
     itemSize: {x: 0, y: 0, z: 0}
     isUnlocked: 0
     itemSkill: {fileID: 0}
+    skillSpawnOffset: {x: 0, y: 1, z: 1}
   slowTimeScale: 0.2
   audioSource: {fileID: 515259774}
   openSFX: {fileID: 8300000, guid: 9bc553dba93f33c4f95d638219e86b85, type: 3}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4541418961674048174}
   - component: {fileID: 2190322552043553013}
   - component: {fileID: 1692564322290764139}
-  - component: {fileID: 2865791846048049253}
+  - component: {fileID: -457542378645941683}
   m_Layer: 0
   m_Name: ice skill
   m_TagString: Untagged
@@ -113,7 +113,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2865791846048049253
+--- !u!114 &-457542378645941683
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,9 +122,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3173945966694929641}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85f0591ed7d97d24c89379dd880f27f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 90d629b933c23b64fb18d2782a9193ac, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DryIceSkill
+  m_EditorClassIdentifier: Assembly-CSharp::IceSkill
   speed: 12
   damage: 35
   lifetime: 5
