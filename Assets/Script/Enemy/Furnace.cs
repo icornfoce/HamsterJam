@@ -57,6 +57,10 @@ public class Furnace : MonoBehaviour
     public string   meleeAttackTrig  = "MeleeAttack";
     public string   rangeAttackTrig  = "RangeAttack";
     public string   summonTrig       = "Summon";
+    public string   deathTrig        = "Die";
+    
+    [Tooltip("เวลาหน่วงก่อนตัวละครจะถูกทำลายหลังจากตาย (เพื่อให้เล่นแอนิเมชันตายจบ)")]
+    public float    deathDelay       = 2f;
 
     // ══════════════════════════════════════════════
     //  Private
@@ -147,6 +151,8 @@ public class Furnace : MonoBehaviour
     /// <summary>รับดาเมจจากผู้เล่นหรือสิ่งอื่น</summary>
     public void TakeDamage(int damage)
     {
+        if (currentHealth <= 0) return; // ถ้าตายแล้ว ไม่รับดาเมจเพิ่ม
+
         currentHealth -= damage;
         currentHealth  = Mathf.Max(currentHealth, 0);
 
@@ -256,8 +262,25 @@ public class Furnace : MonoBehaviour
     private void Die()
     {
         Debug.Log("[Furnace] ถูกทำลาย!");
-        // TODO: เล่น Death Animation / Drop Loot ที่นี่
-        Destroy(gameObject);
+        
+        // เล่น Death Animation
+        if (animator != null)
+            animator.SetTrigger(deathTrig);
+            
+        // ปิด Agent ไม่ให้เดินต่อ
+        if (agent != null)
+            agent.enabled = false;
+            
+        // ปิด Collider ป้องกันการโดนโจมตีซ้ำหรือเดินชน
+        Collider col = GetComponent<Collider>();
+        if (col != null)
+            col.enabled = false;
+            
+        // ปิดสคริปต์นี้เพื่อหยุดการ Update (จะได้ไม่โจมตีต่อตอนกำลังตาย)
+        this.enabled = false;
+
+        // รอหน่วงเวลา (deathDelay) ก่อนทำลาย object เพื่อให้แอนิเมชันตายเล่นจบ
+        Destroy(gameObject, deathDelay);
     }
 
     // ══════════════════════════════════════════════
