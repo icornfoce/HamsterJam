@@ -51,6 +51,8 @@ public class RainSkill : BaseItemSkill
         tickTimer = 0f;
         isActive = true;
 
+        PlayVoice(playerTransform.position);
+
         // สร้าง VFX ฝนตก
         if (rainVFXPrefab != null)
         {

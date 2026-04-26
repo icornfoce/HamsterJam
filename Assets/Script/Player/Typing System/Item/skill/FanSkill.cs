@@ -38,6 +38,7 @@ public class FanSkill : BaseItemSkill
     {
         timer = pushDuration;
 
+        PlayVoice(playerTransform.position);
         if (windSFX != null)
             AudioSource.PlayClipAtPoint(windSFX, playerTransform.position);
 

@@ -40,6 +40,8 @@ public class IceSkill : BaseItemSkill
         transform.position = playerTransform.position + playerTransform.forward * 1.5f + Vector3.up * 1f;
         transform.rotation = playerTransform.rotation;
 
+        PlayVoice(playerTransform.position);
+
         isFired = true;
         Destroy(gameObject, lifetime);
 
