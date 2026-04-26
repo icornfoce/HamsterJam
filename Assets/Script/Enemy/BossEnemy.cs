@@ -9,7 +9,7 @@ using UnityEngine.AI;
 /// - ทุก 20% HP ที่หายไป → Summon ลูกน้อง
 /// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
-public class Furnace : MonoBehaviour
+public class BossEnemy : MonoBehaviour
 {
     // ══════════════════════════════════════════════
     [Header("HP")]
@@ -38,6 +38,8 @@ public class Furnace : MonoBehaviour
     public float      projectileSpeed  = 14f;
     public int        rangeDamage      = 12;
     public float      rangeCooldown    = 2f;
+    [Tooltip("เวลาหน่วงก่อนยิงกระสุนจริง (เพื่อให้ตรงกับแอนิเมชัน)")]
+    public float      rangeAttackDelay = 0.5f;
 
     // ══════════════════════════════════════════════
     [Header("Summon")]
@@ -88,8 +90,7 @@ public class Furnace : MonoBehaviour
     private float nextMeleeTime = 0f;
     private float nextRangeTime = 0f;
 
-    private enum State { Chase, RangeAttack, MeleeAttack }
-    private State currentState;
+    private bool isPerformingSkill = false;
 
     // ══════════════════════════════════════════════
     private void Start()
@@ -143,13 +144,19 @@ public class Furnace : MonoBehaviour
     {
         if (playerTransform == null || !agent.isOnNavMesh) return;
 
+        // ถ้ากำลังร่ายสกิล ให้หยุดเดินและไม่ทำอย่างอื่น
+        if (isPerformingSkill)
+        {
+            agent.isStopped = true;
+            return;
+        }
+
         float dist = Vector3.Distance(transform.position, playerTransform.position);
 
         // ──── ประมวลผลพฤติกรรม ────
         if (dist <= meleeRange)
         {
             // ── โจมตีธรรมดา (Melee) ─────────────────────
-            currentState = State.MeleeAttack;
             agent.isStopped = true;
             FaceTarget(playerTransform.position);
 
@@ -162,17 +169,15 @@ public class Furnace : MonoBehaviour
         else if (dist <= rangeAttackRange && Time.time >= nextRangeTime)
         {
             // ── ยิงกระสุน (Range Attack) ─────────────
-            currentState = State.RangeAttack;
             agent.isStopped = true;
             FaceTarget(playerTransform.position);
 
-            DoRangeAttack();
+            StartCoroutine(RangeAttackRoutine());
             nextRangeTime = Time.time + rangeCooldown;
         }
         else
         {
             // ── วิ่งเข้าหา (Chase) ──────────────────────────────
-            currentState = State.Chase;
             agent.isStopped = false;
             agent.SetDestination(playerTransform.position);
         }
@@ -240,6 +245,9 @@ public class Furnace : MonoBehaviour
         if (animator != null)
             animator.SetTrigger(summonTrig);
 
+        // หยุดเดินขณะ Summon
+        StartCoroutine(StopForSkill(1.5f)); // ปรับเวลาตามความยาวแอนิเมชัน Summon
+
         for (int i = 0; i < minionsPerSummon; i++)
         {
             // กระจายตัวเป็นวงกลมรอบๆ Furnace
@@ -268,38 +276,70 @@ public class Furnace : MonoBehaviour
     }
 
     // ══════════════════════════════════════════════
-    /// <summary>ยิงกระสุน (Range Attack)</summary>
-    private void DoRangeAttack()
+    /// <summary>ยิงกระสุน (Range Attack) พร้อมดีเลย์</summary>
+    private System.Collections.IEnumerator RangeAttackRoutine()
     {
         if (animator != null)
             animator.SetTrigger(rangeAttackTrig);
 
+        // หยุดเดินขณะยิง
+        isPerformingSkill = true;
+        agent.isStopped = true;
+
+        // ช่วงดีเลย์ง้างยิง: ให้หันหน้าตาม Player ตลอดเวลา
+        float elapsed = 0f;
+        while (elapsed < rangeAttackDelay)
+        {
+            if (playerTransform != null)
+                FaceTarget(playerTransform.position);
+            
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // ยิงกระสุน
         if (projectilePrefab != null)
         {
-            Vector3 spawnPos    = firePoint != null ? firePoint.position : transform.position + Vector3.up;
+            Vector3 spawnPos = firePoint != null ? firePoint.position : transform.position + Vector3.up;
             Vector3 dirToPlayer = (playerTransform.position + Vector3.up * 0.5f - spawnPos).normalized;
             Quaternion spawnRot = Quaternion.LookRotation(dirToPlayer);
 
             GameObject proj = Instantiate(projectilePrefab, spawnPos, spawnRot);
 
-            // ใช้ RangeEnemyBullet เดิม
             RangeEnemyBullet bullet = proj.GetComponent<RangeEnemyBullet>();
             if (bullet != null)
             {
-                bullet.damage          = rangeDamage;
-                bullet.speed           = projectileSpeed;
+                bullet.damage = rangeDamage;
+                bullet.speed = projectileSpeed;
                 bullet.playerHealthRef = playerHealth;
             }
         }
         else
         {
-            // Hitscan fallback ถ้าไม่มี Prefab
-            Debug.Log("[Furnace] ไม่มี Projectile Prefab → ใช้ Hitscan");
             if (playerHealth != null)
                 playerHealth.TakeDamage(rangeDamage);
         }
 
-        Debug.Log($"[Furnace] Range Attack! ดาเมจ: {rangeDamage}");
+        Debug.Log($"[Furnace] Range Attack fired!");
+
+        // หน่วงเวลาหลังยิงเล็กน้อยก่อนกลับไปเดิน (Recovery Time)
+        yield return new WaitForSeconds(0.2f); 
+
+        isPerformingSkill = false;
+        if (agent.isActiveAndEnabled)
+            agent.isStopped = false;
+    }
+
+    private System.Collections.IEnumerator StopForSkill(float duration)
+    {
+        isPerformingSkill = true;
+        agent.isStopped = true;
+        
+        yield return new WaitForSeconds(duration);
+        
+        isPerformingSkill = false;
+        if (agent.isActiveAndEnabled)
+            agent.isStopped = false;
     }
 
     // ══════════════════════════════════════════════

@@ -61,17 +61,16 @@ public class PlayerHealthUI : MonoBehaviour
         // 1. อัปเดต RawImage
         if (healthRawImage != null)
         {
+            // ปรับความกว้างตามเลือด (ทำให้หลอดสั้นลง)
             float newWidth = maxRawWidth * healthValue;
-            
             healthRawImage.rectTransform.sizeDelta = new Vector2(newWidth, healthRawImage.rectTransform.sizeDelta.y);
             
-            float pivotX = healthRawImage.rectTransform.pivot.x;
-            float shiftX = (maxRawWidth - newWidth) * pivotX;
-            healthRawImage.rectTransform.anchoredPosition = new Vector2(originalAnchoredPosition.x - shiftX, originalAnchoredPosition.y);
+            // ปรับ uvRect ตามสัดส่วนเลือด (เพื่อให้ภาพไม่โดนบีบเบี้ยว)
+            // ผลลัพธ์คือภาพจะดูเหมือนโดน "ตัด" จากฝั่งขวาออกไปเรื่อยๆ
+            healthRawImage.uvRect = new Rect(0, 0, healthValue, 1);
             
-            // ปิดการทำงานของคำสั่งตัดภาพ (uvRect)
-            // พอเราไม่ตัดภาพ มันก็จะใช้วิธี "บีบหด" รูปภาพแทน ทำให้ปลายโค้งๆ ของรูปแคปซูลยังอยู่เหมือนเดิม
-            healthRawImage.uvRect = originalUV; 
+            // รักษาตำแหน่งเดิมไว้ (อิงตาม Pivot ที่ควรจะเป็น 0 เพื่อให้ลดจากขวาไปซ้าย)
+            healthRawImage.rectTransform.anchoredPosition = originalAnchoredPosition;
         }
 
         // 2. อัปเดต Image Fill

@@ -51,11 +51,11 @@ public class FanSkill : BaseItemSkill
         // หาศัตรูทั้งหมดในฉากจาก Component (ไม่ต้องพึ่ง Tag)
         List<Transform> allEnemies = new List<Transform>();
 
-        foreach (var e in FindObjectsOfType<Enemy>())
+        foreach (var e in FindObjectsByType<Enemy>(FindObjectsSortMode.None))
             allEnemies.Add(e.transform);
-        foreach (var e in FindObjectsOfType<Rangeenemy>())
+        foreach (var e in FindObjectsByType<Rangeenemy>(FindObjectsSortMode.None))
             allEnemies.Add(e.transform);
-        foreach (var e in FindObjectsOfType<Furnace>())
+        foreach (var e in FindObjectsByType<BossEnemy>(FindObjectsSortMode.None))
             allEnemies.Add(e.transform);
 
         Debug.Log($"[FanSkill] พบศัตรูในฉากทั้งหมด {allEnemies.Count} ตัว");
