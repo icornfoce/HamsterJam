@@ -62,6 +62,16 @@ public class Furnace : MonoBehaviour
     [Tooltip("เวลาหน่วงก่อนตัวละครจะถูกทำลายหลังจากตาย (เพื่อให้เล่นแอนิเมชันตายจบ)")]
     public float    deathDelay       = 2f;
 
+    [Header("Cinemachine Camera")]
+    [Tooltip("ลาก Cinemachine Virtual Camera ที่จะให้มองหน้า Furnace มาใส่ตรงนี้")]
+    public GameObject introCamera;
+    [Tooltip("ระยะเวลาที่กล้องจะสลับมาดูหน้า Furnace (วินาที)")]
+    public float introDuration = 3f;
+
+    [Header("UI / Health Bar")]
+    [Tooltip("ลาก Script BossHealthBar (แบบแถบใหญ่บนจอ) มาใส่")]
+    public BossHealthBar bossHealthBar;
+
     // ══════════════════════════════════════════════
     //  Private
     // ══════════════════════════════════════════════
@@ -98,6 +108,34 @@ public class Furnace : MonoBehaviour
 
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
+
+        // ── Setup Health Bar ────────────────────────
+        if (bossHealthBar != null)
+        {
+            bossHealthBar.UpdateHealth(maxHealth, maxHealth);
+            bossHealthBar.Show();
+        }
+
+        // ── Trigger Intro Camera ────────────────────
+        if (introCamera != null)
+        {
+            StartCoroutine(PlayIntroCamera());
+        }
+    }
+
+    private System.Collections.IEnumerator PlayIntroCamera()
+    {
+        // เปิดกล้อง Intro (โดยการปรับ Priority ให้สูงกว่ากล้อง Player)
+        // หมายเหตุ: ใน Inspector ต้องตั้ง Priority กล้อง Player ไว้ที่ 10 
+        // และตั้งกล้อง Intro นี้ไว้ที่ 0 เป็นค่าเริ่มต้น (หรือตรงข้ามกันแล้วแต่ระบบ)
+        // สมมติว่าเราเปิด/ปิด GameObject เพื่อสลับกล้องก็ได้เช่นกัน
+        introCamera.SetActive(true);
+        
+        // รอเวลา
+        yield return new WaitForSeconds(introDuration);
+
+        // ปิดกล้อง Intro เพื่อกลับไปหากล้อง Player
+        introCamera.SetActive(false);
     }
 
     // ══════════════════════════════════════════════
@@ -155,6 +193,12 @@ public class Furnace : MonoBehaviour
 
         currentHealth -= damage;
         currentHealth  = Mathf.Max(currentHealth, 0);
+
+        // ── Update Health Bar ───────────────────────
+        if (bossHealthBar != null)
+        {
+            bossHealthBar.UpdateHealth(currentHealth, maxHealth);
+        }
 
         Debug.Log($"[Furnace] โดนดาเมจ {damage} | HP เหลือ {currentHealth}/{maxHealth}");
 
@@ -262,6 +306,9 @@ public class Furnace : MonoBehaviour
     private void Die()
     {
         Debug.Log("[Furnace] ถูกทำลาย!");
+
+        if (bossHealthBar != null)
+            bossHealthBar.Hide();
         
         // เล่น Death Animation
         if (animator != null)
