@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1959740249971264996
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6647045093269468062, guid: 3ce133d17fb42f5438b4b854675bc1ed, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.6460204
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647045093269468062, guid: 3ce133d17fb42f5438b4b854675bc1ed, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.068604186
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647045093269468062, guid: 3ce133d17fb42f5438b4b854675bc1ed, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.485837
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647045093269468062, guid: 3ce133d17fb42f5438b4b854675bc1ed, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647045093269468062, guid: 3ce133d17fb42f5438b4b854675bc1ed, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647045093269468062, guid: 3ce133d17fb42f5438b4b854675bc1ed, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647045093269468062, guid: 3ce133d17fb42f5438b4b854675bc1ed, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647045093269468062, guid: 3ce133d17fb42f5438b4b854675bc1ed, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647045093269468062, guid: 3ce133d17fb42f5438b4b854675bc1ed, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647045093269468062, guid: 3ce133d17fb42f5438b4b854675bc1ed, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608647142105065880, guid: 3ce133d17fb42f5438b4b854675bc1ed, type: 3}
+      propertyPath: m_Name
+      value: ice sword Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8608647142105065880, guid: 3ce133d17fb42f5438b4b854675bc1ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9161273266361884393}
+  m_SourcePrefab: {fileID: 100100000, guid: 3ce133d17fb42f5438b4b854675bc1ed, type: 3}
+--- !u!1 &7803167677400753276 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8608647142105065880, guid: 3ce133d17fb42f5438b4b854675bc1ed, type: 3}
+  m_PrefabInstance: {fileID: 1959740249971264996}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9161273266361884393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803167677400753276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aa71768b7a75a648a65b9fdc70f59e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IceSwordSkill
+  voiceClip: {fileID: 0}
+  voiceVolume: 1
+  slashRange: 6
+  slashAngle: 120
+  damage: 50
+  slowPercent: 0.5
+  slowDuration: 3
+  slashVFXPrefab: {fileID: 0}
+  slashSFX: {fileID: 0}
