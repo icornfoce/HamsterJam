@@ -82,7 +82,7 @@ MonoBehaviour:
   stormRadius: 10
   duration: 4
   hailPerSecond: 8
-  damagePerHail: 10
+  damagePerHail: 3
   hailSplashRadius: 3
   slowPercent: 0.4
   slowDuration: 2

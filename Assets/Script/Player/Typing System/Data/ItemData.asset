@@ -17,7 +17,7 @@ MonoBehaviour:
     itemPrefab: {fileID: 7768556915814323043, guid: 00e6722510b86ce4198408bbcea3e685, type: 3}
     itemSize: {x: 1, y: 1, z: 1}
     isUnlocked: 1
-    itemSkill: {fileID: 3173945966694929641, guid: 79292c52672f2c54a828eb266a207487, type: 3}
+    itemSkill: {fileID: 4400449924726469058, guid: 188975c2ec37ec340a785e41657fd8c2, type: 3}
     skillSpawnOffset: {x: 0, y: 1, z: 1}
     skillSpawnEulerAngles: {x: 0, y: 0, z: 0}
   - itemName: water
@@ -46,8 +46,8 @@ MonoBehaviour:
     itemBName: water
     resultItem:
       itemName: rain
-      itemPrefab: {fileID: 7707086376604634516, guid: 23983aeae37313e468a252519247d0c2, type: 3}
-      itemSize: {x: 1, y: 1, z: 1}
+      itemPrefab: {fileID: 5100523267146340327, guid: 6204ba1eb17f6604bbca1b64a191863e, type: 3}
+      itemSize: {x: 2, y: 2, z: 2}
       isUnlocked: 0
       itemSkill: {fileID: 4165384610637891644, guid: c937a36f24543804fbba37dc084e83a7, type: 3}
       skillSpawnOffset: {x: 0, y: 1, z: 1}
@@ -66,8 +66,8 @@ MonoBehaviour:
     itemBName: ice
     resultItem:
       itemName: Hail storm
-      itemPrefab: {fileID: 122790, guid: 1bec46c1170f1df4abceae69ff35d82b, type: 3}
-      itemSize: {x: 1, y: 1, z: 1}
+      itemPrefab: {fileID: 5100523267146340327, guid: 6204ba1eb17f6604bbca1b64a191863e, type: 3}
+      itemSize: {x: 2, y: 2, z: 2}
       isUnlocked: 0
       itemSkill: {fileID: 3781210254469517235, guid: 8013f87c4c1f8ec4ab22210e2a3488b0, type: 3}
       skillSpawnOffset: {x: 0, y: 1, z: 1}
@@ -76,17 +76,17 @@ MonoBehaviour:
     itemBName: ice cream
     resultItem:
       itemName: ice cream bullets
-      itemPrefab: {fileID: 8137429522532179340, guid: 62a81171586342f46bdb2bb1d191aeca, type: 3}
+      itemPrefab: {fileID: 919132149155446097, guid: 4ffab24ff85ae5e48851b1a9c81b8d57, type: 3}
       itemSize: {x: 1, y: 1, z: 1}
       isUnlocked: 0
-      itemSkill: {fileID: 8137429522532179340, guid: 62a81171586342f46bdb2bb1d191aeca, type: 3}
+      itemSkill: {fileID: 906480399094968353, guid: c8602bb5f943b5d478f41f16b27119d1, type: 3}
       skillSpawnOffset: {x: 0, y: 1, z: 1}
       skillSpawnEulerAngles: {x: 0, y: 0, z: 0}
   - itemAName: water
     itemBName: water
     resultItem:
       itemName: water domain
-      itemPrefab: {fileID: 6330053056624616938, guid: 75359fd73430e73469f135518dcb0c6f, type: 3}
+      itemPrefab: {fileID: 5974756151701262875, guid: 8047b2ccfc234fe4eb273322f127e6b1, type: 3}
       itemSize: {x: 1, y: 1, z: 1}
       isUnlocked: 0
       itemSkill: {fileID: 4006964074200084299, guid: 92f2b09c6fd63cd4f92c6a193ee913c2, type: 3}
@@ -97,7 +97,7 @@ MonoBehaviour:
     resultItem:
       itemName: big ice cream
       itemPrefab: {fileID: 7707086376604634516, guid: 23983aeae37313e468a252519247d0c2, type: 3}
-      itemSize: {x: 1, y: 1, z: 1}
+      itemSize: {x: 3, y: 3, z: 3}
       isUnlocked: 0
       itemSkill: {fileID: 7244017303350777292, guid: 57a8722aa7b13534e9d1dc08567e4168, type: 3}
       skillSpawnOffset: {x: 0, y: 1, z: 1}
@@ -116,7 +116,7 @@ MonoBehaviour:
     itemBName: water
     resultItem:
       itemName: snow ball shot gun
-      itemPrefab: {fileID: 8608647142105065880, guid: 3ce133d17fb42f5438b4b854675bc1ed, type: 3}
+      itemPrefab: {fileID: 5811320182251995063, guid: fb8e59595416fb6488ad61004674b0db, type: 3}
       itemSize: {x: 1, y: 1, z: 1}
       isUnlocked: 0
       itemSkill: {fileID: 9091161176083420810, guid: 3cf6a746b541e234eae4331b2a6d4f25, type: 3}

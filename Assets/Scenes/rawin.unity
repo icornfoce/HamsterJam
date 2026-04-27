@@ -268,6 +268,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 618174566340545394, guid: cd805427d3810bc4fa2e98c74948291d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3809961365401542464, guid: cd805427d3810bc4fa2e98c74948291d, type: 3}
       propertyPath: audioSource
       value: 
@@ -1239,6 +1243,10 @@ PrefabInstance:
       propertyPath: statusText
       value: 
       objectReference: {fileID: 215406420}
+    - target: {fileID: 1873435023246249874, guid: 2d00a4ad5d47d90439d6b329d29c2096, type: 3}
+      propertyPath: destroyOnCollect
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7140221962782949266, guid: 2d00a4ad5d47d90439d6b329d29c2096, type: 3}
       propertyPath: m_Name
       value: Fan

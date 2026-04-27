@@ -89,9 +89,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1470d7126709b9e4ab21c81df7df0a7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RainSkill
+  voiceClip: {fileID: 0}
+  voiceVolume: 1
   rainRadius: 8
-  duration: 5
-  damagePerTick: 5
+  duration: 4
+  damagePerTick: 3
   tickInterval: 0.5
   slowPercent: 0.3
   rainVFXPrefab: {fileID: 0}
