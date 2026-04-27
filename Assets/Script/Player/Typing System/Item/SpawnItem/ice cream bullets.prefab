@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 9112206913948897111}
   - component: {fileID: 3831906692648925994}
   - component: {fileID: 9051016946472645094}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ice cream bullets
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

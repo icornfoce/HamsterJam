@@ -12,6 +12,16 @@ public class Item : MonoBehaviour
     public GameObject uiCanvas; // หน้าต่าง Canvas ที่จะให้เด้งขึ้นมาบอกว่าได้รับไอเทม
     public TextMeshProUGUI statusText; // ตัวหนังสือที่จะบอกว่าได้รับไอเทมอะไร
 
+    [Header("ตั้งค่าการเก็บไอเทม")]
+    [Tooltip("ถ้าเปิดใช้งาน ไอเทมจะหายไปเมื่อเก็บเสร็จ, ถ้าปิด ไอเทมจะวางอยู่ที่เดิม")]
+    public bool destroyOnCollect = true;
+    [Tooltip("ลากโมเดลของไอเทม (กล่อง/หนังสือ) มาใส่ตรงนี้เพื่อทำให้หายไปตอนเก็บ (ถ้าไม่ใส่ระบบจะพยายามซ่อนเอง)")]
+    public GameObject itemModel;
+    [Tooltip("ระยะเวลาที่จะโชว์ UI ค้างไว้ก่อนลบทิ้ง (วินาที)")]
+    public float showUITime = 2f;
+
+    private bool isCollected = false;
+
     private void Start()
     {
         // ซ่อน UI ไว้ก่อนตอนเริ่มเกม
@@ -24,9 +34,14 @@ public class Item : MonoBehaviour
     // ทำงานเมื่อมีบางอย่างเข้ามาชน
     private void OnTriggerEnter(Collider other)
     {
+        // ถ้าตั้งค่าให้หายไป และโดนเก็บไปแล้ว ไม่ต้องทำซ้ำ
+        if (destroyOnCollect && isCollected) return;
+
         // เช็คว่าคนที่มาชนมี Tag เป็น "Player" หรือไม่
         if (other.CompareTag("Player"))
         {
+            isCollected = true; // มาร์คว่าเก็บแล้ว
+
             // ทำการปลดล็อคใน ItemData
             if (itemData != null && !string.IsNullOrEmpty(targetItemName))
             {
@@ -54,17 +69,61 @@ public class Item : MonoBehaviour
                 // แสดง UI ขึ้นมา (เช่น คำอธิบายว่าได้ไอเทมนี้แล้ว)
                 uiCanvas.SetActive(true);
             }
+
+            // ถ้าระบบเปิดให้ของหาย
+            if (destroyOnCollect)
+            {
+                // ซ่อนโมเดลของไอเทม (ทำให้ดูเหมือนหยิบไปแล้ว)
+                HideItemVisuals();
+
+                // สั่งให้รอตามเวลา showUITime แล้วค่อยปิด UI และทำลาย Object ทิ้ง
+                Invoke("FinishCollection", showUITime);
+            }
         }
     }
 
-    // ทำงานเมื่อเดินออกจาก Item
+    private void HideItemVisuals()
+    {
+        // ถ้ามีการลาก Model มาใส่ช่อง ก็ปิดมันเลย
+        if (itemModel != null)
+        {
+            itemModel.SetActive(false);
+        }
+        else
+        {
+            // ถ้าไม่ได้ลากใส่ ให้ลองซ่อน MeshRenderer
+            MeshRenderer rend = GetComponent<MeshRenderer>();
+            if (rend != null) rend.enabled = false;
+
+            // และลองซ่อนลูกๆ ทั้งหมดที่ไม่ใช่ UI
+            foreach (Transform child in transform)
+            {
+                if (uiCanvas == null || child.gameObject != uiCanvas)
+                {
+                    child.gameObject.SetActive(false);
+                }
+            }
+        }
+    }
+
+    private void FinishCollection()
+    {
+        if (uiCanvas != null)
+        {
+            uiCanvas.SetActive(false);
+        }
+        // ลบ Object ทิ้งออกจากฉากเลย
+        Destroy(gameObject);
+    }
+
+    // ทำงานเมื่อเดินออกจาก Item (เผื่อตั้งค่าให้ไอเทมไม่หาย)
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!destroyOnCollect && other.CompareTag("Player"))
         {
             if (uiCanvas != null)
             {
-                // ปิด UI เมื่อผู้เล่นเดินออก (แต่ใน Data จะยังเป็น isUnlocked = true อยู่)
+                // ปิด UI เมื่อผู้เล่นเดินออก 
                 uiCanvas.SetActive(false);
             }
         }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6550655501008804853}
   - component: {fileID: 2416091621444713555}
   - component: {fileID: 5163120038525105251}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel_BL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 5669358042900009238}
   - component: {fileID: 6565113099989506267}
   - component: {fileID: 1870245013803291751}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel_FR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 300076305265302402}
   - component: {fileID: 7309937515218518444}
   - component: {fileID: 7509259326741261469}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel_FL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 9066464858890018933}
   - component: {fileID: 1920247227036359159}
   - component: {fileID: 3583585162318110205}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel_BR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,9 +369,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6371312551605834635}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ice cream
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -407,7 +407,7 @@ GameObject:
   - component: {fileID: 346091326968308579}
   - component: {fileID: 3032602541880945407}
   - component: {fileID: 3271511348928664009}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}

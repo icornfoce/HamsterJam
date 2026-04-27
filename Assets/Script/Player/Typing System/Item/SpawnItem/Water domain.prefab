@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4899663096187962650}
   - component: {fileID: 5060340127624379668}
   - component: {fileID: 4484905847174718419}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ThrowingParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4856,7 +4856,7 @@ GameObject:
   - component: {fileID: 1422655175060511150}
   - component: {fileID: 4214513036552232921}
   - component: {fileID: 2154899402231709869}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FloatingParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9710,7 +9710,7 @@ GameObject:
   - component: {fileID: 5564496464586070604}
   - component: {fileID: 283236155042384622}
   - component: {fileID: 5613035997766705866}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: InnerWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9800,7 +9800,7 @@ GameObject:
   - component: {fileID: 933093171468347594}
   - component: {fileID: 4024691451970863880}
   - component: {fileID: 5889575473491344309}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OuterWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9890,7 +9890,7 @@ GameObject:
   - component: {fileID: 2616681953520664365}
   - component: {fileID: 6487319920241279532}
   - component: {fileID: 4082646175878940287}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9979,9 +9979,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2017433003128589558}
   - component: {fileID: 3784510848924137695}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Water domain
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

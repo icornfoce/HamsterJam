@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4102635061106192983}
   - component: {fileID: 5298910419754514046}
   - component: {fileID: 8205520389889361847}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: snow ball
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5204225825249353582}
   - component: {fileID: 7051109561408989619}
   - component: {fileID: 2910421540209447733}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,9 +102,9 @@ GameObject:
   - component: {fileID: 6850292779303857975}
   - component: {fileID: 887234466438952038}
   - component: {fileID: 3662401493632817787}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fan
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

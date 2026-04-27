@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 6647045093269468062}
   - component: {fileID: 4714358506591499209}
   - component: {fileID: 2721065818478503252}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ice sword
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

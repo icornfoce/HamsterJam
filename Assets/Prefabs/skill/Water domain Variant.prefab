@@ -83,5 +83,8 @@ MonoBehaviour:
   damage: 40
   pushForce: 4
   pushDuration: 0.8
+  damageDelay: 1.2
+  shrinkSpeed: 10
+  destroyDelay: 2.5
   explosionVFXPrefab: {fileID: 0}
   explosionSFX: {fileID: 0}

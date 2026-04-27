@@ -60,9 +60,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -685441821259645373, guid: 7f941d5a88580f148953f9a25b0aac25, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7f941d5a88580f148953f9a25b0aac25, type: 3}
       propertyPath: m_Name
-      value: ice cream 1
+      value: big ice cream
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7f941d5a88580f148953f9a25b0aac25, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7f941d5a88580f148953f9a25b0aac25, type: 3}
+      propertyPath: m_TagString
+      value: Item
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
