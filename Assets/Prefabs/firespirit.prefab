@@ -183,7 +183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4488647059092499727
 Transform:
   m_ObjectHideFlags: 0
@@ -321,7 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbbfcc875bf19d146bae90da6b62fe27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Firespirit
-  speed: 3
+  speed: 5
   maxHealth: 100
   attackDamage: 10
   jumpDistance: 5

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class Rangeenemy : MonoBehaviour
@@ -34,6 +35,7 @@ public class Rangeenemy : MonoBehaviour
     private NavMeshAgent agent;
     private float        nextAttackTime = 0f;
     private PlayerHealth playerHealth;          // cache ไว้เพื่อส่งให้กระสุนโดยตรง
+    private bool         isAttacking    = false; // เพิ่มตัวแปรสถานะการโจมตี
 
     // สถานะของ AI
     private enum State { Chase, Hold, Retreat }
@@ -62,7 +64,7 @@ public class Rangeenemy : MonoBehaviour
     // ──────────────────────────────────────────
     private void Update()
     {
-        if (playerTransform == null || !agent.isOnNavMesh) return;
+        if (playerTransform == null || !agent.isOnNavMesh || isAttacking) return;
 
         float distToPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
@@ -110,7 +112,7 @@ public class Rangeenemy : MonoBehaviour
         // ──── โจมตีถ้าอยู่ในระยะ attackRange ────
         if (distToPlayer <= attackRange && Time.time >= nextAttackTime)
         {
-            Attack();
+            StartCoroutine(AttackRoutine());
             nextAttackTime = Time.time + attackCooldown;
         }
     }
@@ -130,44 +132,53 @@ public class Rangeenemy : MonoBehaviour
     }
 
     // ──────────────────────────────────────────
-    /// <summary>ยิงกระสุนหรือโจมตีจากระยะไกล</summary>
-    private void Attack()
+    /// <summary>คอรูทีนจัดการการโจมตี (เพื่อให้หยุดเดินชั่วคราว)</summary>
+    private IEnumerator AttackRoutine()
     {
+        isAttacking = true;
+        agent.isStopped = true;
+
         // เล่น Animation
         if (animator != null)
+        {
+            animator.SetBool(runAnimBool, false); // ปิดแอนิเมชันวิ่ง
             animator.SetTrigger(attackTrigger);
+        }
 
-        // หันหน้าหา Player ก่อนยิง
+        // หันหน้าหา Player
         FaceTarget(playerTransform.position);
 
         if (projectilePrefab != null)
         {
-            // ────── สร้างกระสุนและหันหน้าตรงไปที่ Player ──────
+            // ────── สร้างกระสุน ──────
             Vector3 spawnPos = firePoint != null ? firePoint.position : transform.position + Vector3.up;
             Vector3 dirToPlayer = (playerTransform.position + Vector3.up * 0.5f - spawnPos).normalized;
             Quaternion spawnRot = Quaternion.LookRotation(dirToPlayer);
 
             GameObject proj = Instantiate(projectilePrefab, spawnPos, spawnRot);
 
-            // ตั้งค่าให้ RangeEnemyBullet อัตโนมัติ
             RangeEnemyBullet bullet = proj.GetComponent<RangeEnemyBullet>();
             if (bullet != null)
             {
                 bullet.damage          = attackDamage;
                 bullet.speed           = projectileSpeed;
-                bullet.playerHealthRef = playerHealth;  // ส่ง instance ที่แน่ใจว่าผูก UI ไว้
+                bullet.playerHealthRef = playerHealth;
             }
         }
         else
         {
-            // ────── ไม่มี Prefab → Hitscan โจมตีตรงๆ ──────
-            Debug.Log("[RangeEnemy] ไม่มี Projectile Prefab → ใช้ Hitscan แทน");
+            // ────── Hitscan ──────
             PlayerHealth pHealth = playerTransform.GetComponent<PlayerHealth>();
             if (pHealth != null)
                 pHealth.TakeDamage(attackDamage);
         }
 
         Debug.Log($"[RangeEnemy] โจมตี Player! ดาเมจ: {attackDamage}");
+
+        // หยุดนิ่งสักพักตามระยะเวลาแอนิเมชัน (ปรับได้)
+        yield return new WaitForSeconds(0.8f);
+
+        isAttacking = false;
     }
 
     // ──────────────────────────────────────────

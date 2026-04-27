@@ -11,7 +11,8 @@ public class Enemy : MonoBehaviour
     public int maxHealth = 100;
     private int currentHealth;
 
-    [Header("การโจมตี (การสัมผัส)")]
+    [Header("การโจมตี")]
+    public float attackRange = 2f; 
     public int attackDamage = 10;
     public float attackCooldown = 1f;
 
@@ -48,13 +49,30 @@ public class Enemy : MonoBehaviour
     {
         if (playerTransform != null)
         {
-            // เดินตามเป้าหมาย (Player)
-            if (agent.isOnNavMesh)
+            float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+
+            if (distanceToPlayer <= attackRange)
             {
-                agent.SetDestination(playerTransform.position);
+                // หยุดเดินและโจมตี
+                agent.isStopped = true;
+                
+                if (Time.time >= nextAttackTime)
+                {
+                    Attack();
+                    nextAttackTime = Time.time + attackCooldown;
+                }
+            }
+            else
+            {
+                // เดินตามเป้าหมาย (Player)
+                if (agent.isOnNavMesh)
+                {
+                    agent.isStopped = false;
+                    agent.SetDestination(playerTransform.position);
+                }
             }
 
-            // เปิดแอนิเมชันวิ่ง
+            // จัดการแอนิเมชัน
             if (animator != null)
             {
                 bool isMoving = agent.velocity.magnitude > 0.1f && !agent.isStopped;
@@ -63,59 +81,34 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void Attack()
+    {
+        // เล่นแอนิเมชันโจมตี
+        if (animator != null)
+        {
+            animator.SetTrigger(attackTrigger);
+        }
+
+        // ทำดาเมจ
+        PlayerHealth pHealth = playerTransform.GetComponent<PlayerHealth>();
+        if (pHealth != null)
+        {
+            pHealth.TakeDamage(attackDamage);
+        }
+
+        Debug.Log($"Enemy โจมตี Player! >>> ดาเมจ: {attackDamage}");
+    }
+
+    // เก็บการชนไว้เป็น Fallback หรือสำหรับกรณีวิ่งชน
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            DoDamage(collision.gameObject);
-        }
-    }
-    
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            DoDamage(collision.gameObject);
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            DoDamage(other.gameObject);
-        }
-    }
-    
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            DoDamage(other.gameObject);
-        }
-    }
-
-    private void DoDamage(GameObject targetPlayer)
-    {
-        if (Time.time >= nextAttackTime)
-        {
-            // เล่นแอนิเมชันโจมตี
-            if (animator != null)
+            if (Time.time >= nextAttackTime)
             {
-                animator.SetTrigger(attackTrigger);
+                Attack();
+                nextAttackTime = Time.time + attackCooldown;
             }
-
-            // --- ชั่วคราว: ปิดระบบลดเลือดไปก่อนตามที่ต้องการ ---
-            PlayerHealth pHealth = targetPlayer.GetComponent<PlayerHealth>();
-            if (pHealth != null)
-            {
-                pHealth.TakeDamage(attackDamage);
-            }
-
-            // ให้พิมพ์แค่ Debug ลง Console ตอนนี้
-            Debug.Log($"Enemy แตะโดนตัว Player! >>> เลือด Player ลดลงไป: {attackDamage}");
-
-            nextAttackTime = Time.time + attackCooldown;
         }
     }
 

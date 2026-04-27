@@ -3242,7 +3242,7 @@ GameObject:
   - component: {fileID: 7641093897737015676}
   - component: {fileID: 5888018920132523349}
   - component: {fileID: 4251400633770863284}
-  - component: {fileID: 2273255016315574877}
+  - component: {fileID: 5285251007963370144}
   - component: {fileID: 1798227789440598725}
   m_Layer: 0
   m_Name: FlameGuy
@@ -3312,7 +3312,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2273255016315574877
+--- !u!114 &5285251007963370144
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3326,8 +3326,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   speed: 3
   maxHealth: 100
+  attackRange: 2
   attackDamage: 10
-  attackCooldown: 1
+  attackCooldown: 2
   animator: {fileID: 5888018920132523349}
   runAnimationBool: isRunning
   attackTrigger: Attack
@@ -3346,7 +3347,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

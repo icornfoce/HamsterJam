@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 /// <summary>
 /// Furnace Enemy
@@ -54,6 +55,9 @@ public class BossEnemy : MonoBehaviour
 
     [Tooltip("คูลดาวน์ระหว่างการ Summon แต่ละครั้ง (CC)")]
     public float summonCooldown = 4f;
+
+    [Tooltip("เวลาหน่วงก่อนลูกน้องจะโผล่ออกมาจริง (เพื่อให้ตรงกับแอนิเมชันร่าย)")]
+    public float summonSpawnDelay = 1.0f;
 
     // ══════════════════════════════════════════════
     [Header("แอนิเมชัน")]
@@ -136,46 +140,61 @@ public class BossEnemy : MonoBehaviour
         walkAudioSource.playOnAwake = false;
         walkAudioSource.spatialBlend = 1f; // ให้เป็นเสียง 3D
 
+        // ── Trigger Intro / Setup UI ────────────────────
+        StartCoroutine(HandleBossIntro());
+    }
+
+    private IEnumerator HandleBossIntro()
+    {
+        // เล่นเสียงเกิดทันที
         PlaySound(spawnSFX);
 
+        // รอเล็กน้อยเพื่อให้แอนิเมชันเริ่ม หรือให้ผู้เล่นเตรียมตัว
+        yield return new WaitForSeconds(0.2f);
+
         // ── Setup Health Bar ────────────────────────
+        if (bossHealthBar == null)
+        {
+            // พยายามหาแม้จะถูกปิด (Inactive) อยู่ในฉาก
+            BossHealthBar[] allBars = Resources.FindObjectsOfTypeAll<BossHealthBar>();
+            foreach (var bar in allBars)
+            {
+                // ตรวจสอบว่าเป็น Object ในฉากจริงๆ (ไม่ใช่ต้นฉบับใน Project/Asset)
+                if (bar.gameObject.scene.name != null)
+                {
+                    bossHealthBar = bar;
+                    break;
+                }
+            }
+        }
+
         if (bossHealthBar != null)
         {
-            bossHealthBar.UpdateHealth(maxHealth, maxHealth);
+            bossHealthBar.gameObject.SetActive(true); // เปิดใช้งาน Object เผื่อถูกปิดไว้
+            bossHealthBar.UpdateHealth(currentHealth, maxHealth);
             bossHealthBar.Show();
         }
 
         // ── Trigger Intro Camera ────────────────────
         if (introCamera != null)
         {
-            StartCoroutine(PlayIntroCamera());
+            introCamera.SetActive(true);
+            yield return new WaitForSeconds(introDuration);
+            introCamera.SetActive(false);
         }
     }
 
-    private System.Collections.IEnumerator PlayIntroCamera()
-    {
-        // เปิดกล้อง Intro (โดยการปรับ Priority ให้สูงกว่ากล้อง Player)
-        // หมายเหตุ: ใน Inspector ต้องตั้ง Priority กล้อง Player ไว้ที่ 10 
-        // และตั้งกล้อง Intro นี้ไว้ที่ 0 เป็นค่าเริ่มต้น (หรือตรงข้ามกันแล้วแต่ระบบ)
-        // สมมติว่าเราเปิด/ปิด GameObject เพื่อสลับกล้องก็ได้เช่นกัน
-        introCamera.SetActive(true);
-        
-        // รอเวลา
-        yield return new WaitForSeconds(introDuration);
-
-        // ปิดกล้อง Intro เพื่อกลับไปหากล้อง Player
-        introCamera.SetActive(false);
-    }
 
     // ══════════════════════════════════════════════
     private void Update()
     {
-        if (playerTransform == null || !agent.isOnNavMesh) return;
+        if (playerTransform == null) return;
 
         // ถ้ากำลังร่ายสกิล ให้หยุดเดินและไม่ทำอย่างอื่น
         if (isPerformingSkill)
         {
-            agent.isStopped = true;
+            if (agent.isActiveAndEnabled && agent.isOnNavMesh)
+                agent.isStopped = true;
             return;
         }
 
@@ -183,10 +202,26 @@ public class BossEnemy : MonoBehaviour
 
         // ──── ประมวลผลพฤติกรรมตามลำดับความสำคัญ ────
 
-        // 1. Melee Attack (สำคัญที่สุด - ถ้าเข้าระยะให้ตีใกล้ก่อน)
-        if (dist <= meleeRange)
+        // 1. Summon (สำคัญที่สุด - ถ้าถึง Threshold ให้ Summon ก่อนแม้จะอยู่ใกล้ Player)
+        if (pendingSummonCount > 0 && Time.time >= nextSummonTime)
         {
-            agent.isStopped = true;
+            if (agent.isActiveAndEnabled && agent.isOnNavMesh)
+                agent.isStopped = true;
+                
+            isPerformingSkill = true; // ล็อคสถานะทันที
+            Debug.Log($"<color=cyan>[Boss] กำลังเริ่มขั้นตอน Summon... (คิวคงเหลือ: {pendingSummonCount})</color>");
+            
+            StartCoroutine(SummonRoutine()); // ใช้ Coroutine เพื่อให้มี Delay
+            
+            pendingSummonCount--;
+            nextSummonTime = Time.time + summonCooldown;
+        }
+        // 2. Melee Attack (ถ้าไม่อยู่ในขั้นตอน Summon และเข้าระยะ)
+        else if (dist <= meleeRange)
+        {
+            if (agent.isActiveAndEnabled && agent.isOnNavMesh)
+                agent.isStopped = true;
+                
             FaceTarget(playerTransform.position);
 
             if (Time.time >= nextMeleeTime)
@@ -195,19 +230,12 @@ public class BossEnemy : MonoBehaviour
                 nextMeleeTime = Time.time + meleeCooldown;
             }
         }
-        // 2. Summon (ถ้าไม่อยู่ในระยะ Melee, มีคิวค้างอยู่ และ Cooldown พร้อม)
-        else if (pendingSummonCount > 0 && Time.time >= nextSummonTime)
-        {
-            agent.isStopped = true;
-            Debug.Log($"<color=cyan>[Boss] กำลังร่ายสกิล Summon... (คิวรอ: {pendingSummonCount})</color>");
-            SummonMinions();
-            pendingSummonCount--;
-            nextSummonTime = Time.time + summonCooldown;
-        }
         // 3. Range Attack (ถ้า Summon ไม่ได้และอยู่ในระยะยิง)
         else if (dist <= rangeAttackRange && Time.time >= nextRangeTime)
         {
-            agent.isStopped = true;
+            if (agent.isActiveAndEnabled && agent.isOnNavMesh)
+                agent.isStopped = true;
+                
             FaceTarget(playerTransform.position);
 
             StartCoroutine(RangeAttackRoutine());
@@ -216,8 +244,11 @@ public class BossEnemy : MonoBehaviour
         // 4. Chase (กรณีอื่นทั้งหมด)
         else
         {
-            agent.isStopped = false;
-            agent.SetDestination(playerTransform.position);
+            if (agent.isActiveAndEnabled && agent.isOnNavMesh)
+            {
+                agent.isStopped = false;
+                agent.SetDestination(playerTransform.position);
+            }
         }
 
         // ──── แอนิเมชันวิ่ง และ เสียงเดิน ────
@@ -283,35 +314,67 @@ public class BossEnemy : MonoBehaviour
         }
     }
 
-    // ══════════════════════════════════════════════
-    /// <summary>Summon ลูกน้องรอบๆ Furnace</summary>
-    private void SummonMinions()
+    private IEnumerator SummonRoutine()
     {
-        if (minionPrefab == null)
-        {
-            Debug.LogWarning("[Furnace] ไม่มี Minion Prefab กรุณากำหนดใน Inspector!");
-            return;
-        }
-
         if (animator != null)
             animator.SetTrigger(summonTrig);
 
         PlaySound(summonSFX);
 
-        // หยุดเดินขณะ Summon
-        StartCoroutine(StopForSkill(1.5f)); // ปรับเวลาตามความยาวแอนิเมชัน Summon
+        // หยุดเดินขณะ Summon (ใช้เวลาทั้งหมดของท่า)
+        StartCoroutine(StopForSkill(1.5f + summonSpawnDelay)); 
 
-        for (int i = 0; i < minionsPerSummon; i++)
+        // รอเวลาให้แอนิเมชันเล่นไปถึงจังหวะที่ควรจะเกิดลูกน้อง
+        yield return new WaitForSeconds(summonSpawnDelay);
+
+        SummonMinions();
+    }
+
+    // ══════════════════════════════════════════════
+    /// <summary>Summon ลูกน้องรอบๆ Boss</summary>
+    private void SummonMinions()
+    {
+        Debug.Log($"[Boss] กำลังทำงานใน SummonMinions()... (จำนวนที่ต้องการ: {minionsPerSummon})");
+
+        if (minionPrefab == null)
         {
-            // กระจายตัวเป็นวงกลมรอบๆ Furnace
-            float angle    = (360f / minionsPerSummon) * i * Mathf.Deg2Rad;
-            Vector3 offset = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * summonRadius;
-            Vector3 spawnPos = transform.position + offset;
-
-            Instantiate(minionPrefab, spawnPos, Quaternion.identity);
+            Debug.LogError("[Boss] ไม่สามารถ Summon ได้เนื่องจากไม่มี Minion Prefab! กรุณาลากใส่ใน Inspector ของ BossEnemy");
+            isPerformingSkill = false;
+            return;
         }
 
-        Debug.Log($"[Furnace] Summon ลูกน้อง {minionsPerSummon} ตัว!");
+        if (minionsPerSummon <= 0)
+        {
+            Debug.LogWarning("[Boss] minionsPerSummon มีค่าเป็น 0 หรือติดลบ ระบบจะปรับเป็น 1 ตัวให้อัตโนมัติ");
+            minionsPerSummon = 1;
+        }
+
+        int actualSpawned = 0;
+        for (int i = 0; i < minionsPerSummon; i++)
+        {
+            // กระจายตัวเป็นวงกลมรอบๆ Boss
+            float angle    = (360f / minionsPerSummon) * i * Mathf.Deg2Rad;
+            Vector3 offset = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * summonRadius;
+            Vector3 targetPos = transform.position + offset;
+
+            // ตรวจสอบตำแหน่งบน NavMesh เพื่อไม่ให้ลูกน้องเกิดนอกแมพหรือในกำแพง
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(targetPos, out hit, 4f, NavMesh.AllAreas))
+            {
+                GameObject minion = Instantiate(minionPrefab, hit.position, Quaternion.identity);
+                Debug.Log($"[Boss] สร้างลูกน้องตัวที่ {actualSpawned + 1} สำเร็จที่ตำแหน่ง NavMesh: {hit.position}");
+                actualSpawned++;
+            }
+            else
+            {
+                // ถ้าหาจุดบน NavMesh ไม่ได้ ให้เกิดที่ตำแหน่ง Boss แทน (Safe fallback)
+                GameObject minion = Instantiate(minionPrefab, transform.position, Quaternion.identity);
+                Debug.Log($"[Boss] หาจุดบน NavMesh ไม่ได้ จึงสร้างลูกน้องตัวที่ {actualSpawned + 1} ที่ตำแหน่งบอสแทน: {transform.position}");
+                actualSpawned++;
+            }
+        }
+
+        Debug.Log($"<color=green>[Boss] ขั้นตอนการ Summon ทั้งหมดเสร็จสิ้น! รวมสร้างได้: {actualSpawned} ตัว</color>");
     }
 
     // ══════════════════════════════════════════════
@@ -332,7 +395,7 @@ public class BossEnemy : MonoBehaviour
 
     // ══════════════════════════════════════════════
     /// <summary>ยิงกระสุน (Range Attack) พร้อมดีเลย์</summary>
-    private System.Collections.IEnumerator RangeAttackRoutine()
+    private IEnumerator RangeAttackRoutine()
     {
         if (animator != null)
             animator.SetTrigger(rangeAttackTrig);
@@ -387,7 +450,7 @@ public class BossEnemy : MonoBehaviour
             agent.isStopped = false;
     }
 
-    private System.Collections.IEnumerator StopForSkill(float duration)
+    private IEnumerator StopForSkill(float duration)
     {
         isPerformingSkill = true;
         agent.isStopped = true;

@@ -16,15 +16,16 @@ public class anim_clip_offset : MonoBehaviour
 
     void Play_Animationclip_offset()
     {
-            AnimatorClipInfo[] clip_name = animator.GetCurrentAnimatorClipInfo(0);
-            AnimationClip anim_clip = clip_name[0].clip;
+        AnimatorClipInfo[] clip_name = animator.GetCurrentAnimatorClipInfo(0);
+        if (clip_name == null || clip_name.Length == 0) return;
 
-            float time = Random.Range(0f, anim_clip.length);
-            int clip_position = animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
+        AnimationClip anim_clip = clip_name[0].clip;
+        if (anim_clip == null) return;
 
-            animator.Play(clip_position, 0, time / anim_clip.length);
-            
+        float time = Random.Range(0f, anim_clip.length);
+        int clip_position = animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
 
+        animator.Play(clip_position, 0, time / anim_clip.length);
     }
     void Update(){
 

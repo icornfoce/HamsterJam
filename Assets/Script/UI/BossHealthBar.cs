@@ -24,15 +24,42 @@ public class BossHealthBar : MonoBehaviour
 
     private void Awake()
     {
+        // ค้นหา CanvasGroup อัตโนมัติถ้าไม่ได้ใส่มา
+        if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup != null) canvasGroup.alpha = 0;
+
+        // พยายามหา UI Components อัตโนมัติจากลูกๆ (Children) ถ้าไม่ได้ลากมาใส่
+        if (mainRawImage == null || chipRawImage == null)
+        {
+            RawImage[] images = GetComponentsInChildren<RawImage>(true);
+            foreach (var img in images)
+            {
+                if (mainRawImage == null && img.gameObject.name.ToLower().Contains("main")) mainRawImage = img;
+                else if (chipRawImage == null && img.gameObject.name.ToLower().Contains("chip")) chipRawImage = img;
+            }
+            // Fallback: ถ้าหาตามชื่อไม่เจอ ให้หยิบตัวแรกๆ มาเลย
+            if (mainRawImage == null && images.Length > 0) mainRawImage = images[0];
+            if (chipRawImage == null && images.Length > 1) chipRawImage = images[1];
+        }
+
+        if (bossNameText == null) bossNameText = GetComponentInChildren<TextMeshProUGUI>(true);
+
+        // ตั้งชื่อบอส
         if (bossNameText != null) bossNameText.text = bossName;
 
+        // เก็บค่าความกว้างสูงสุด
         if (mainRawImage != null)
             maxWidth = mainRawImage.rectTransform.sizeDelta.x;
+        else
+            Debug.LogWarning("[BossHealthBar] ไม่พบ MainRawImage กรุณาตรวจสอบการตั้งค่าใน Inspector!");
     }
 
     public void Show()
     {
+        if (canvasGroup != null)
+        {
+            canvasGroup.gameObject.SetActive(true);
+        }
         StopAllCoroutines();
         StartCoroutine(Fade(1f));
     }
@@ -82,6 +109,8 @@ public class BossHealthBar : MonoBehaviour
 
     private IEnumerator Fade(float targetAlpha)
     {
+        if (canvasGroup == null) yield break;
+
         float startAlpha = canvasGroup.alpha;
         float time = 0;
         while (time < fadeDuration)

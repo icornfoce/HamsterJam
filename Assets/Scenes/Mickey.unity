@@ -751,23 +751,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d00a4ad5d47d90439d6b329d29c2096, type: 3}
---- !u!1 &1591523894 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4483660643087498462, guid: cd805427d3810bc4fa2e98c74948291d, type: 3}
+--- !u!225 &1591523898 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 2952092061057100675, guid: cd805427d3810bc4fa2e98c74948291d, type: 3}
   m_PrefabInstance: {fileID: 5201590504326054080}
   m_PrefabAsset: {fileID: 0}
---- !u!225 &1591523898
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1591523894}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1001 &1753863718
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -920,6 +908,10 @@ PrefabInstance:
       propertyPath: animator
       value: 
       objectReference: {fileID: 125701675}
+    - target: {fileID: 5888018920132523349, guid: b156c0a369198af43a0f36d9774d8eda, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 5179d0803bf765e4581e19acebad4f03, type: 2}
     - target: {fileID: 7641093897737015676, guid: b156c0a369198af43a0f36d9774d8eda, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.2515485
@@ -966,7 +958,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7735647995947235352, guid: b156c0a369198af43a0f36d9774d8eda, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1006,7 +998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58704c67dac6e0b4083fa6d07859560f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Furnace
-  maxHealth: 200
+  maxHealth: 1000
   moveSpeed: 3
   meleeRange: 3
   rangeAttackRange: 10
@@ -1020,8 +1012,9 @@ MonoBehaviour:
   rangeAttackDelay: 4.2
   minionPrefab: {fileID: 630569298726339544, guid: 1cc1730ed81952742a6b9d78ae1135ea, type: 3}
   minionsPerSummon: 2
-  summonRadius: 7
+  summonRadius: 3
   summonCooldown: 4
+  summonSpawnDelay: 2
   animator: {fileID: 3532593660754184559}
   runAnimBool: isRunning
   meleeAttackTrig: MeleeAttack
@@ -1032,12 +1025,33 @@ MonoBehaviour:
   introCamera: {fileID: 1441652622}
   introDuration: 3
   bossHealthBar: {fileID: 3532593660754184560}
-  spawnSFX: {fileID: 0}
-  walkSFX: {fileID: 0}
-  meleeSFX: {fileID: 0}
-  rangeSFX: {fileID: 0}
-  summonSFX: {fileID: 0}
-  deathSFX: {fileID: 0}
+  spawnSFX: {fileID: 8300000, guid: 7a813e04e312ab340811e743b03200fc, type: 3}
+  walkSFX: {fileID: 8300000, guid: ece0f1077adc8f14eb2e89d07814dffc, type: 3}
+  meleeSFX: {fileID: 8300000, guid: 40c1033fbe5874644a07df7e870e0985, type: 3}
+  rangeSFX: {fileID: 8300000, guid: 99b4e4542bd266a41a67b16543f0c551, type: 3}
+  summonSFX: {fileID: 8300000, guid: 5f3aa6ac006ff22479e7db5f552984ef, type: 3}
+  deathSFX: {fileID: 8300000, guid: d33e17f3cbecb5e43b9b4b4ca5a19533, type: 3}
+--- !u!65 &3532593660754184566
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3482683205100372729}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &5201590504326054080
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1141,10 +1155,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4483660643087498462, guid: cd805427d3810bc4fa2e98c74948291d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1591523898}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd805427d3810bc4fa2e98c74948291d, type: 3}
 --- !u!1001 &6114561029128683191
 PrefabInstance:
@@ -1157,6 +1168,10 @@ PrefabInstance:
     - target: {fileID: 630569298726339544, guid: 1cc1730ed81952742a6b9d78ae1135ea, type: 3}
       propertyPath: m_Name
       value: firespirit
+      objectReference: {fileID: 0}
+    - target: {fileID: 630569298726339544, guid: 1cc1730ed81952742a6b9d78ae1135ea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4488647059092499727, guid: 1cc1730ed81952742a6b9d78ae1135ea, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1286,7 +1301,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 122126878220182749, guid: 2ee8e729348e7a44b863f11455145af1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1180991682204843682, guid: 2ee8e729348e7a44b863f11455145af1, type: 3}
       propertyPath: m_Name
@@ -1353,6 +1368,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1591523898}
     - target: {fileID: 8960566067531859083, guid: 2ee8e729348e7a44b863f11455145af1, type: 3}
+      propertyPath: chipRawImage
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8960566067531859083, guid: 2ee8e729348e7a44b863f11455145af1, type: 3}
       propertyPath: mainRawImage
       value: 
       objectReference: {fileID: 2124972862}
@@ -1364,6 +1383,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 122126878220182749, guid: 2ee8e729348e7a44b863f11455145af1, type: 3}
       insertIndex: 3
       addedObject: {fileID: 3532593660754184563}
+    - targetCorrespondingSourceObject: {fileID: 122126878220182749, guid: 2ee8e729348e7a44b863f11455145af1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3532593660754184566}
   m_SourcePrefab: {fileID: 100100000, guid: 2ee8e729348e7a44b863f11455145af1, type: 3}
 --- !u!1001 &8202875229843844872
 PrefabInstance:
@@ -1419,7 +1441,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2928496189145316169, guid: 2dc81987607594a43be7094918c134d6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
