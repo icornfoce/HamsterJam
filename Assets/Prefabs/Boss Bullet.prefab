@@ -203,6 +203,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4839509710485744509, guid: 1baab8f0bfcb9424db132788d2903ffe, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4839509710485744509, guid: 1baab8f0bfcb9424db132788d2903ffe, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.21960784
+      objectReference: {fileID: 0}
+    - target: {fileID: 4839509710485744509, guid: 1baab8f0bfcb9424db132788d2903ffe, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9086796180157426372, guid: 1baab8f0bfcb9424db132788d2903ffe, type: 3}
       propertyPath: m_Name
       value: VFX_Fire
