@@ -81,10 +81,10 @@ MonoBehaviour:
   voiceVolume: 1
   explosionRadius: 12
   damage: 40
-  pushForce: 4
+  pushForce: 2
   pushDuration: 0.8
-  damageDelay: 1.2
-  shrinkSpeed: 10
+  damageDelay: 1.1
+  shrinkSpeed: 7
   destroyDelay: 2.5
-  explosionVFXPrefab: {fileID: 0}
+  explosionVFXPrefab: {fileID: 8585649807550039280, guid: 65d735eb9bbae54418aa426bfc50d6ff, type: 3}
   explosionSFX: {fileID: 0}
