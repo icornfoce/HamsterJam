@@ -513,78 +513,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 800c645f1c0f83047b8a0d92e39c67f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthUI
---- !u!1 &506573012
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 506573013}
-  - component: {fileID: 506573015}
-  - component: {fileID: 506573014}
-  m_Layer: 5
-  m_Name: VideoDisplay
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &506573013
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 506573012}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 810395214}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &506573014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 506573012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Texture: {fileID: 0}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
---- !u!222 &506573015
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 506573012}
-  m_CullTransparentMesh: 1
 --- !u!1 &744726542
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,51 +626,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &810395213
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 810395214}
-  - component: {fileID: 810395216}
-  m_Layer: 5
-  m_Name: VideoPanel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &810395214
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 810395213}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 506573013}
-  m_Father: {fileID: 1620969241}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &810395216
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 810395213}
-  m_CullTransparentMesh: 1
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,8 +713,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e0b393fd2e1c8946907f4e6ce429661, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VideoManager
-  videoPanel: {fileID: 810395213}
-  videoDisplay: {fileID: 506573014}
+  videoPanel: {fileID: 0}
+  videoDisplay: {fileID: 0}
   videoPlayer: {fileID: 1495139715}
   introClip: {fileID: 32900000, guid: 868fd6c015d88d240ab990788480568e, type: 3}
   playerDeathClip: {fileID: 32900000, guid: 5e536ac1fe0efa243a7b1209c36811df, type: 3}
@@ -840,11 +723,6 @@ MonoBehaviour:
 --- !u!225 &1591523898 stripped
 CanvasGroup:
   m_CorrespondingSourceObject: {fileID: 2952092061057100675, guid: cd805427d3810bc4fa2e98c74948291d, type: 3}
-  m_PrefabInstance: {fileID: 5201590504326054080}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &1620969241 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5484546773213654840, guid: cd805427d3810bc4fa2e98c74948291d, type: 3}
   m_PrefabInstance: {fileID: 5201590504326054080}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1884845800
@@ -1373,10 +1251,7 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 4835198204465521809, guid: cd805427d3810bc4fa2e98c74948291d, type: 3}
     - {fileID: 8416761757319437058, guid: cd805427d3810bc4fa2e98c74948291d, type: 3}
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 5484546773213654840, guid: cd805427d3810bc4fa2e98c74948291d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 810395214}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd805427d3810bc4fa2e98c74948291d, type: 3}
 --- !u!1001 &5289541261588528999

@@ -144,7 +144,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 115272063}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 868fd6c015d88d240ab990788480568e, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: b291bd8fa2cde0147a0b96704efe7991, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -294,7 +294,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -150}
+  m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 900, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &708003124
@@ -375,8 +375,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: START
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cdb4e684c34494528ba7e5eed88827f5, type: 2}
+  m_sharedMaterial: {fileID: 749932718026059147, guid: cdb4e684c34494528ba7e5eed88827f5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -400,8 +400,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 126
-  m_fontSizeBase: 126
+  m_fontSize: 180
+  m_fontSizeBase: 180
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -867,13 +867,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8016ab08a188b7747a50fb9eff5a7b8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuManager
-  gameSceneName: GameScene
+  gameSceneName: Gameplay
   mainMenuPanel: {fileID: 0}
   fadeCanvasGroup: {fileID: 0}
   fadeDuration: 1
   hoverScaleSize: 1.1
   animationSpeed: 10
-  hoverFadeColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+  hoverFadeColor: {r: 1, g: 0.011299435, b: 0, a: 1}
   sfxSource: {fileID: 0}
   hoverSFX: {fileID: 0}
   clickSFX: {fileID: 0}

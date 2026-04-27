@@ -3773,7 +3773,7 @@ MonoBehaviour:
   videoPlayer: {fileID: 4877425885969528954}
   introClip: {fileID: 32900000, guid: 868fd6c015d88d240ab990788480568e, type: 3}
   playerDeathClip: {fileID: 32900000, guid: 5e536ac1fe0efa243a7b1209c36811df, type: 3}
-  bossDeathClip: {fileID: 0}
+  bossDeathClip: {fileID: 32900000, guid: 0bce99b2a5cf12442900fcfbd60d0c79, type: 3}
   logoutClip: {fileID: 0}
 --- !u!1 &6424404533883779549
 GameObject:
