@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
+using UnityEngine.EventSystems;
 
 public class TypingSystem : MonoBehaviour
 {
@@ -92,7 +94,10 @@ public class TypingSystem : MonoBehaviour
             ReleaseItem();
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && !isSlowed)
+        // Prevent opening typing system if a video is playing
+        bool isVideoPlaying = VideoManager.Instance != null && VideoManager.Instance.IsPlaying;
+
+        if (Input.GetKeyDown(KeyCode.E) && !isSlowed && !isVideoPlaying)
         {
             OpenTyping();
         }
@@ -455,8 +460,38 @@ public class TypingSystem : MonoBehaviour
         if (isSlowed && inputField != null)
         {
             inputField.text = "";
-            inputField.Select();
+            inputField.ActivateInputField(); // สั่งโฟกัสทันทีรอบที่ 1
+            StartCoroutine(FocusInputField()); // สั่งโฟกัสซ้ำอีกรอบในเฟรมถัดๆ ไป
+
+            // ปลดล็อกเมาส์เพื่อให้พิมพ์ได้
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            // ล็อกเมาส์กลับเมื่อพิมพ์เสร็จ
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
+
+    private IEnumerator FocusInputField()
+    {
+        // รอแบบ Realtime เล็กน้อย (ไม่สน Time.timeScale) เพื่อให้ UI พร้อมจริงๆ
+        yield return new WaitForSecondsRealtime(0.05f);
+        if (inputField != null)
+        {
+            // บังคับเลือกวัตถุผ่าน EventSystem
+            if (EventSystem.current != null)
+            {
+                EventSystem.current.SetSelectedGameObject(inputField.gameObject);
+            }
+            
             inputField.ActivateInputField();
+            inputField.Select();
+            
+            // เลื่อน Cursor ไปท้ายสุดของตัวหนังสือ (ถ้ามี)
+            inputField.MoveTextEnd(false);
         }
     }
 

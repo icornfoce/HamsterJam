@@ -1,5 +1,7 @@
 ﻿<Solution>
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Drakkar.csproj" />
+  <Project Path="GameUtils.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="kTools.Mirrors.Editor.csproj" />
   <Project Path="kTools.Mirrors.Runtime.csproj" />

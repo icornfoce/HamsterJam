@@ -133,6 +133,9 @@ MonoBehaviour:
   targetItemName: fan
   uiCanvas: {fileID: 0}
   statusText: {fileID: 0}
+  destroyOnCollect: 1
+  itemModel: {fileID: 0}
+  showUITime: 2
 --- !u!65 &3081787538037564090
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -20,12 +20,14 @@ public class VideoManager : MonoBehaviour
     [SerializeField] private VideoClip logoutClip;
 
     private Action onVideoComplete;
+    public bool IsPlaying => videoPlayer != null && videoPlayer.isPlaying;
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            transform.SetParent(null); // Ensure it's a root object for DontDestroyOnLoad
             DontDestroyOnLoad(gameObject);
             
             // Initialize display if not already set
@@ -148,11 +150,16 @@ public class VideoManager : MonoBehaviour
 
     private void OnMovieFinished(VideoPlayer vp)
     {
-        // Resume the game
+        // Resume the game only if the typing system is not active
+        // We'll use a safe check here or just let the caller handle it
         Time.timeScale = 1f;
 
         if (videoPanel != null)
             videoPanel.SetActive(false);
+
+        // Lock cursor back if needed (standard gameplay state)
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         onVideoComplete?.Invoke();
         onVideoComplete = null;
