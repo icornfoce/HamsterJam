@@ -86,5 +86,5 @@ MonoBehaviour:
   damageDelay: 1.1
   shrinkSpeed: 7
   destroyDelay: 2.5
-  explosionVFXPrefab: {fileID: 8585649807550039280, guid: 65d735eb9bbae54418aa426bfc50d6ff, type: 3}
+  explosionVFXPrefab: {fileID: 0}
   explosionSFX: {fileID: 0}
