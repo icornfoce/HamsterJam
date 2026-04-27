@@ -26,6 +26,7 @@ public class TypingSystem : MonoBehaviour
     [Header("Settings")]
     [Range(0.1f, 1f)] [SerializeField] private float slowTimeScale = 0.2f;
     private bool isSlowed = false;
+    private bool needsFocus = false;
 
     [Header("Audio Effects")]
     [SerializeField] private AudioSource audioSource;
@@ -133,6 +134,28 @@ public class TypingSystem : MonoBehaviour
             else if (currentOverlayAlpha <= 0 && typingVignette.gameObject.activeSelf)
             {
                 typingVignette.gameObject.SetActive(false);
+            }
+        }
+
+        // บังคับโฟกัสช่องพิมพ์จนกว่าจะสำเร็จ
+        if (needsFocus && inputField != null)
+        {
+            if (!inputField.isFocused)
+            {
+                inputField.Select();
+                inputField.ActivateInputField();
+                
+                // จำลองการคลิก (เพื่อให้ระบบ UI ยอมรับแม้เมาส์จะล็อก)
+                if (EventSystem.current != null)
+                {
+                    PointerEventData eventData = new PointerEventData(EventSystem.current);
+                    inputField.OnPointerClick(eventData);
+                }
+            }
+            else
+            {
+                // ถ้าโฟกัสติดแล้ว ให้เลิกทำ
+                needsFocus = false;
             }
         }
 
@@ -460,38 +483,18 @@ public class TypingSystem : MonoBehaviour
         if (isSlowed && inputField != null)
         {
             inputField.text = "";
-            inputField.ActivateInputField(); // สั่งโฟกัสทันทีรอบที่ 1
-            StartCoroutine(FocusInputField()); // สั่งโฟกัสซ้ำอีกรอบในเฟรมถัดๆ ไป
-
-            // ปลดล็อกเมาส์เพื่อให้พิมพ์ได้
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        else
-        {
-            // ล็อกเมาส์กลับเมื่อพิมพ์เสร็จ
+            needsFocus = true; // เริ่มกระบวนการบังคับโฟกัสใน Update
+            
+            // ไม่ต้องปลดล็อกเมาส์ (ซ่อนไว้ตามเดิมตามที่ต้องการ)
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-    }
-
-    private IEnumerator FocusInputField()
-    {
-        // รอแบบ Realtime เล็กน้อย (ไม่สน Time.timeScale) เพื่อให้ UI พร้อมจริงๆ
-        yield return new WaitForSecondsRealtime(0.05f);
-        if (inputField != null)
+        else
         {
-            // บังคับเลือกวัตถุผ่าน EventSystem
-            if (EventSystem.current != null)
-            {
-                EventSystem.current.SetSelectedGameObject(inputField.gameObject);
-            }
-            
-            inputField.ActivateInputField();
-            inputField.Select();
-            
-            // เลื่อน Cursor ไปท้ายสุดของตัวหนังสือ (ถ้ามี)
-            inputField.MoveTextEnd(false);
+            needsFocus = false;
+            // ล็อกเมาส์ไว้ปกติ
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 

@@ -150,12 +150,23 @@ public class VideoManager : MonoBehaviour
 
     private void OnMovieFinished(VideoPlayer vp)
     {
-        // Resume the game only if the typing system is not active
-        // We'll use a safe check here or just let the caller handle it
+        // Resume the game
         Time.timeScale = 1f;
 
         if (videoPanel != null)
+        {
+            // ปิด UI วิดีโอ
             videoPanel.SetActive(false);
+            
+            // ถ้ามี CanvasGroup ให้สั่งเลิกบล็อก Raycast ด้วยเพื่อความชัวร์
+            CanvasGroup cg = videoPanel.GetComponent<CanvasGroup>();
+            if (cg != null)
+            {
+                cg.alpha = 0;
+                cg.blocksRaycasts = false;
+                cg.interactable = false;
+            }
+        }
 
         // Lock cursor back if needed (standard gameplay state)
         Cursor.lockState = CursorLockMode.Locked;
@@ -163,6 +174,8 @@ public class VideoManager : MonoBehaviour
 
         onVideoComplete?.Invoke();
         onVideoComplete = null;
+        
+        Debug.Log("Video Finished and UI disabled.");
     }
 
     // Optional: Skip video
