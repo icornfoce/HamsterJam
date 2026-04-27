@@ -116,6 +116,15 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         OnHealthChanged?.Invoke(GetHealthNormalized());
+
+        // เมื่อฮีล ให้ขอบจอแดง (Damage Vignette) หายไปทันที
+        if (damageVignette != null)
+        {
+            targetAlpha = 0f;
+            currentAlpha = 0f;
+            SetVignetteAlpha(0f);
+            damageVignette.gameObject.SetActive(false);
+        }
     }
 
     private void Die()

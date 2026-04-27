@@ -93,6 +93,12 @@ public class TypingSystem : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             ReleaseItem();
+            
+            // ให้คลิกขวาปิดหน้าต่างพิมพ์และค่อยๆ จาง Vignette เหมือนการกด ESC
+            if (isSlowed)
+            {
+                SetSlowMotion(false);
+            }
         }
 
         // Prevent opening typing system if a video is playing
@@ -111,11 +117,19 @@ public class TypingSystem : MonoBehaviour
         // ตรวจสอบการกด Enter เพื่อส่งคำศัพท์ (ส่งเฉพาะตอนที่เปิดหน้าต่างพิมพ์อยู่)
         if (isSlowed && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)))
         {
-            if (inputField != null && !string.IsNullOrEmpty(inputField.text))
+            if (inputField != null)
             {
-                TryMatchItem(inputField.text);
+                if (!string.IsNullOrEmpty(inputField.text))
+                {
+                    TryMatchItem(inputField.text);
+                }
+                else
+                {
+                    // ถ้าช่องว่างแล้วกด Enter ก็ปิดหน้าต่างพิมพ์ (เหมือนกด ESC)
+                    SetSlowMotion(false);
+                }
+                
                 inputField.text = "";
-                inputField.ActivateInputField();
             }
         }
 
