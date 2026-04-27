@@ -140,22 +140,30 @@ public class TypingSystem : MonoBehaviour
         // บังคับโฟกัสช่องพิมพ์จนกว่าจะสำเร็จ
         if (needsFocus && inputField != null)
         {
+            // บังคับให้สถานะพร้อมใช้งาน
+            inputField.interactable = true;
+            inputField.enabled = true;
+
             if (!inputField.isFocused)
             {
                 inputField.Select();
                 inputField.ActivateInputField();
                 
-                // จำลองการคลิก (เพื่อให้ระบบ UI ยอมรับแม้เมาส์จะล็อก)
                 if (EventSystem.current != null)
                 {
+                    // บังคับเลือกวัตถุ
+                    EventSystem.current.SetSelectedGameObject(inputField.gameObject);
+                    
+                    // จำลองการคลิก
                     PointerEventData eventData = new PointerEventData(EventSystem.current);
                     inputField.OnPointerClick(eventData);
                 }
             }
             else
             {
-                // ถ้าโฟกัสติดแล้ว ให้เลิกทำ
                 needsFocus = false;
+                // เลื่อนไปท้ายสุดเพื่อความพร้อม
+                inputField.MoveTextEnd(false);
             }
         }
 
@@ -485,6 +493,15 @@ public class TypingSystem : MonoBehaviour
             inputField.text = "";
             needsFocus = true; // เริ่มกระบวนการบังคับโฟกัสใน Update
             
+            // ถ้ามี CanvasGroup ให้เปิดให้หมด
+            CanvasGroup cg = typingUI.GetComponent<CanvasGroup>();
+            if (cg != null)
+            {
+                cg.alpha = 1f;
+                cg.blocksRaycasts = true;
+                cg.interactable = true;
+            }
+
             // ไม่ต้องปลดล็อกเมาส์ (ซ่อนไว้ตามเดิมตามที่ต้องการ)
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
