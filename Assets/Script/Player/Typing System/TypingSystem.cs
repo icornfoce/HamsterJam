@@ -198,6 +198,25 @@ public class TypingSystem : MonoBehaviour
     {
         if (itemData == null) return false;
 
+        // Check for special commands
+        if (string.Equals(input, "logout", System.StringComparison.OrdinalIgnoreCase))
+        {
+            if (VideoManager.Instance != null)
+            {
+                VideoManager.Instance.PlayLogout(() => {
+                    Debug.Log("Logout cutscene finished.");
+                    // You might want to return to main menu here
+                    #if UNITY_EDITOR
+                        UnityEditor.EditorApplication.isPlaying = false;
+                    #else
+                        Application.Quit();
+                    #endif
+                });
+            }
+            SetSlowMotion(false);
+            return true;
+        }
+
         foreach (var item in itemData.items)
         {
             if (string.Equals(item.itemName, input, System.StringComparison.OrdinalIgnoreCase))

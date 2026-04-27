@@ -124,6 +124,15 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player has died.");
         OnDeath?.Invoke();
         
+        // Play Death Cutscene
+        if (VideoManager.Instance != null)
+        {
+            VideoManager.Instance.PlayPlayerDeath(() => {
+                // You might want to reload scene or show Game Over UI here
+                Debug.Log("Player death cutscene finished.");
+            });
+        }
+
         // Disable movement
         PlayerController controller = GetComponent<PlayerController>();
         if (controller != null)

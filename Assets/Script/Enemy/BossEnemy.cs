@@ -476,6 +476,14 @@ public class BossEnemy : MonoBehaviour
         // เล่น Death Animation
         if (animator != null)
             animator.SetTrigger(deathTrig);
+
+        // Play Boss Death Cutscene
+        if (VideoManager.Instance != null)
+        {
+            VideoManager.Instance.PlayBossDeath(() => {
+                Debug.Log("Boss death cutscene finished.");
+            });
+        }
             
         // ปิด Agent ไม่ให้เดินต่อ
         if (agent != null)
