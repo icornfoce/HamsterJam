@@ -3278,10 +3278,10 @@ Animator:
   m_GameObject: {fileID: 7735647995947235352}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 1dd9c954362f1eb4a86dcc2c3013fd91, type: 3}
-  m_Controller: {fileID: 9100000, guid: 68f11b75dfb41d3419936178a0608940, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5179d0803bf765e4581e19acebad4f03, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
@@ -3328,7 +3328,7 @@ MonoBehaviour:
   maxHealth: 100
   attackDamage: 10
   attackCooldown: 1
-  animator: {fileID: 0}
+  animator: {fileID: 5888018920132523349}
   runAnimationBool: isRunning
   attackTrigger: Attack
 --- !u!65 &1798227789440598725
@@ -3346,7 +3346,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
